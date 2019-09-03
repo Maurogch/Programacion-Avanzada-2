@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>TP3</title>
+    <script src="script.js"></script>
+</head>
+<body>
+    <header><p>This is a header</p></header>
+    <nav><p>This is a navbar</p></nav>
+    <aside><p>This is an aside</p></aside>
+    <section>
+        <div><p>Body of page</p></div>
+        <article>
+            <p>Article</p>
+            <details>
+                summary
+            </details>
+        </article>
+    </section>
+    <footer><p>This is the footer</p></footer>
+    
+</body>
+</html>
+
+<style>
+    body{
+        border: 1px solid black;
+        margin: auto !important;
+        text-align: center;
+        padding: 1em;
+    }
+
+    header{
+        background: green;
+        padding: inherit;
+    }
+
+    nav{
+        background: blue;
+        padding: 0.2em;
+        margin-top: 0.5em;
+    }
+
+    aside{
+        background: red;
+        float: left;
+        width: 30%;
+        box-sizing:content-box;
+        height: 250px;
+        margin-top: 0.5em;
+        margin-right: 10px;
+    }
+
+    section{
+        background: wheat;
+        float: left;
+        width: calc(70% - 10px);
+        height: 250px;
+        margin-top: 0.5em;
+    }
+
+    article{
+        background: #eeeed1;
+        margin: 1em;
+        height: 75%;
+    }
+
+    details{
+        background: #cecea8;
+        margin: 1em;
+        height: 75%;x
+    }
+
+    footer{
+        background: yellow; 
+        display: inline-block;
+        width: 100%;
+        margin-top: 0.5em;
+    }
+</style>

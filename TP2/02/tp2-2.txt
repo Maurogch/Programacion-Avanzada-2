@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Tp2</title>
+</head>
+<body>
+<p class="test"></p>
+<p class="test"></p>
+<button onclick="algo()">Presioname</button>
+</body>
+</html>
+
+function algo(){
+  document.getElementsByClassName("test")[0].innerHTML = "Hello World";
+}
