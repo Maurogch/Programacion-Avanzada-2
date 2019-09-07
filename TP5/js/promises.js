@@ -1,6 +1,6 @@
 function onLoadTable(){
     var t = $('#dtTable').DataTable();
-    t.row.add().draw( false ); /*add div with loader, reasearch how to put colspan 6*/
+    t.row.add().draw( false ); /*add div with loader, reasearch how to put colspan 6*/  
 
     apiRequest().then((response) => {
         hideLoader();
