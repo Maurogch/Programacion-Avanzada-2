@@ -1,0 +1,29 @@
+# Javascript
+
+## **Useful Javascript Snippets**
+
+**Class Helpers**
+con→ adds default constructor in the class constructor() {}
+met→ creates a method inside a class add() {}
+pge→ creates a getter property get propertyName() {return value;}
+pse→ creates a setter property set propertyName(value) {}
+
+**Various**
+fof→ for ... of loop for(const item of object) {}
+fin→ for ... in loop for(const item in object) {}
+anfn→ creates an anonymous function (params) => {}
+nfn→ creates a named function const add = (params) => {}
+dob→ destructing object syntax const {rename} = fs
+dar→ destructing array syntax const [first, second] = [1,2]
+
+**Promises**
+sti→ set interval helper method setInterval(() => {});
+sto→ set timeout helper method setTimeout(() => {});
+prom→ creates a new Promise return new Promise((resolve, reject) => {});
+thenc→ adds then and catch declaration to a promise .then((res) => {).catch((err) => {});
+
+**Console**
+clg→ console log console.log(object)
+clo→ console log object with name console.log('object :', object);
+ccl→ console clear console.clear()
+cas→ console alert method console.assert(expression, object)
