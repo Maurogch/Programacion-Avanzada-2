@@ -1,4 +1,4 @@
-# Angular e-Commerce
+# Angular E-Commerce
 
 - Lista de productos inicialmente en un array cargado manualmente a memoria.
 
@@ -13,3 +13,4 @@
 | stock         | 
 | img           | 
 
+[E-Commerce full template](https://mdbootstrap.com/freebies/jquery/e-commerce/)
