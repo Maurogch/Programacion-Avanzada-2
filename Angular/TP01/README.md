@@ -7,7 +7,9 @@
 | Producto      |
 | ------------- |
 | id            | 
-| descripcion   | 
-| precio        |
+| name          | 
+| description   | 
+| price         |
 | stock         | 
+| img           | 
 
