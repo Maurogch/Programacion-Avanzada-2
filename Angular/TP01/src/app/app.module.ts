@@ -1,8 +1,7 @@
 // Core modules
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import appRoutes from './routerConfig';
+import { AppRoutingModule } from './router-config.module';
 // Extra modules
 import { NgxPopper } from 'angular-popper';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -24,11 +23,11 @@ import { FooterComponent } from './footer/footer.component';
   ],
   imports: [
     BrowserModule, //
-    RouterModule,
-    RouterModule.forRoot(appRoutes),
     NgxPopper,
     NgbModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    // Routing must be at end
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
