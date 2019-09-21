@@ -78,11 +78,18 @@
     <div class="container">
       <div class="row">
         <!-- Blog Entries Column -->
-        <div id="posts" class="col-md-8">
-          <h1 class="my-4">Welcome to my awesome Blog</h1>
+        <div class="col-md-8">
+          <h1 class="my-4">Bienvenido a mi asombroso Blog</h1>
 
-          <div class="card mb-4">
-            <iframe src="algo.html" frameborder="0"></iframe>
+          <div class="card mb-4" id="loader">
+            <img
+              class="mx-auto"
+              src="./img/loader_gif.gif"
+              alt="loader"
+              height="200"
+              width="300"
+            />
+            <span class="text-center">Cargando...</span>
           </div>
 
           <div class="card mb-4" id="noposts" hidden>
@@ -91,28 +98,7 @@
             </h2>
           </div>
 
-          <!-- Blog Post -->
-          <div class="post card mb-4">
-            <img
-              class="card-img-top"
-              src="http://placehold.it/750x300"
-              alt="Card image cap"
-            />
-            <div class="card-body">
-              <h2 class="card-title">Post Title</h2>
-              <p class="card-text">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                Reiciendis aliquid atque, nulla? Quos cum ex quis soluta, a
-                laboriosam. Dicta expedita corporis animi vero voluptate
-                voluptatibus possimus, veniam magni quis!
-              </p>
-              <a href="#" class="btn btn-primary">Read More &rarr;</a>
-            </div>
-            <div class="card-footer text-muted">
-              Posted on January 1, 2017 by
-              <a href="#">Start Bootstrap</a>
-            </div>
-          </div>
+          <div id="posts"></div>
 
           <!-- Pagination -->
           <ul class="pagination justify-content-center mb-4">
@@ -129,18 +115,19 @@
         <div class="col-md-4">
           <!-- Search Widget -->
           <div class="card my-4">
-            <h5 class="card-header">Search Posts by ID</h5>
+            <h5 class="card-header">Buesqueda de posts por ID</h5>
             <div class="card-body">
-              <div class="input-group">
+              <form class="input-group" action="/post.html" method="get">
                 <input
                   type="number"
                   class="form-control"
-                  placeholder="Search for post..."
+                  placeholder="Introduce ID..."
+                  name="id"
                 />
                 <span class="input-group-btn">
-                  <button class="btn btn-secondary" type="button">Go!</button>
+                  <input class="btn btn-secondary" type="submit" value="Ir!" />
                 </span>
-              </div>
+              </form>
             </div>
           </div>
 
@@ -208,3 +195,29 @@
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   </body>
 </html>
+
+<style>
+  #loader {
+    position: relative;
+    font-family: sans-serif;
+    text-transform: uppercase;
+    font-size: 2em;
+    letter-spacing: 4px;
+    overflow: hidden;
+    background: linear-gradient(90deg, #000, #fff, #000);
+    background-repeat: no-repeat;
+    background-size: 80%;
+    animation: animate 3s linear infinite;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: rgba(255, 255, 255, 0);
+  }
+
+  @keyframes animate {
+    0% {
+      background-position: -500%;
+    }
+    100% {
+      background-position: 500%;
+    }
+  }
+</style>
