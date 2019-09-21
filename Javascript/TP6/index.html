@@ -134,10 +134,25 @@
               <!-- Pagination -->
               <ul class="pagination justify-content-center mb-4">
                 <li class="page-item">
-                  <a class="page-link" href="#">&larr; Older</a>
+                  <button
+                    onclick="asyncLoadPosts(5)"
+                    style="margin:0.2em"
+                    class="btn btn-primary"
+                  >
+                    Antiguos
+                  </button>
+                  <!--<a class="page-link" href="#">&larr; Older</a>-->
                 </li>
                 <li class="page-item disabled">
-                  <a class="page-link" href="#">Newer &rarr;</a>
+                  <button
+                    onclick="asyncLoadPosts(-5)"
+                    id="btnNewer"
+                    style="margin:0.2em"
+                    class="btn btn-primary"
+                  >
+                    Nuevos
+                  </button>
+                  <!--<a class="page-link" href="#">Newer &rarr;</a>-->
                 </li>
               </ul>
             </div>
@@ -243,7 +258,7 @@
   }
 
   #content-wrap {
-    padding-bottom: 2.5rem; /* Footer height */
+    padding-bottom: 5.5rem; /* Footer height */
   }
 
   #footer {

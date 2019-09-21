@@ -1,5 +1,7 @@
+var pagination = 0;
+
 function indexLoad() {
-  asyncLoadPosts();
+  asyncLoadPosts(0);
 }
 
 function post() {
@@ -20,7 +22,7 @@ function post() {
   sendPost(api)
     .then(result => {
       document.getElementById('posts').innerHTML = '';
-      asyncLoadPosts();
+      asyncLoadPosts(0);
     })
     .catch(err => {
       console.log(err);
@@ -30,8 +32,19 @@ function post() {
     });
 }
 
-async function asyncLoadPosts() {
-  await loadPosts()
+async function asyncLoadPosts(offset) {
+  document.getElementById('posts').innerHTML = '';
+  window.scrollTo(0, 0); //scroll to top of page
+
+  pagination = pagination + offset;
+
+  if (pagination === 0) {
+    document.getElementById('btnNewer').setAttribute('disabled', true);
+  } else {
+    document.getElementById('btnNewer').removeAttribute('disabled');
+  }
+
+  await loadPosts(pagination)
     .then(result => {
       console.log(result);
       result.forEach(element => {
@@ -95,14 +108,16 @@ async function asyncLoadPosts() {
     });
 }
 
-function loadPosts() {
+function loadPosts(paginationWithOffset) {
   return new Promise((resolve, reject) => {
     var request = new XMLHttpRequest();
-
-    request.open(
-      'GET',
-      ' https://utn2019-avanzada2-tp6.herokuapp.com/api/posts?from=0&to=6'
-    );
+    var api =
+      ' https://utn2019-avanzada2-tp6.herokuapp.com/api/posts?from=' +
+      paginationWithOffset +
+      '&to=' +
+      (paginationWithOffset + 5);
+    console.log(api);
+    request.open('GET', api);
 
     request.responseType = 'json';
 
