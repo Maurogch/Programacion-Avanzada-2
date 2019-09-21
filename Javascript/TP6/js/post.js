@@ -54,6 +54,8 @@ async function setPost(id) {
       document.getElementById('img').setAttribute('src', imgString);
 
       document.getElementById('body').innerHTML = result.body;
+
+      document.getElementById('loading').setAttribute('hidden', true);
     })
     .catch(err => {
       console.log(err);
