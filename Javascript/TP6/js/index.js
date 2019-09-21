@@ -39,7 +39,19 @@ async function asyncLoadPosts() {
 
         let div3 = document.createElement('div');
         div3.classList.add('card-footer', 'text-muted');
-        div3.innerHTML = new Date(element.date).toUTCString;
+        let options = {
+          weekday: 'long',
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+          hour: 'numeric',
+          minute: 'numeric',
+          second: 'numeric'
+        };
+        let date = new Date(element.date);
+        date.setHours(date.getHours() - 3); //Shift hours to UTC-3, seems local datetime is not doing it
+        div3.innerHTML =
+          'Post publicado el ' + date.toLocaleDateString('es-US', options);
         div.appendChild(div3);
 
         document.getElementById('posts').appendChild(div);
@@ -61,8 +73,9 @@ function loadPosts() {
 
     request.open(
       'GET',
-      ' https://utn2019-avanzada2-tp6.herokuapp.com/api/posts?from=1&to=6'
+      ' https://utn2019-avanzada2-tp6.herokuapp.com/api/posts?from=0&to=6'
     );
+
     request.responseType = 'json';
 
     request.onload = function() {
