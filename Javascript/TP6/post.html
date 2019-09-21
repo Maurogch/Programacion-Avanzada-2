@@ -114,27 +114,29 @@
 
           <!-- Comments Form -->
           <div class="card my-4">
-            <h5 class="card-header">Deje un comentario:</h5>
-            <div class="card-body">
-              <div class="form-group">
-                <input
-                  class="form-control"
-                  type="text"
-                  id="author"
-                  placeholder="Autor"
-                  required
-                />
-                <textarea
-                  class="form-control"
-                  rows="3"
-                  id="text"
-                  required
-                ></textarea>
+            <form id="form" onsubmit="comment(); return false;">
+              <h5 class="card-header">Deje un comentario:</h5>
+              <div class="card-body">
+                <div class="form-group">
+                  <input
+                    class="form-control"
+                    type="text"
+                    id="author"
+                    placeholder="Autor"
+                    required
+                  />
+                  <textarea
+                    class="form-control"
+                    rows="3"
+                    id="text"
+                    required
+                  ></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                  Comentar
+                </button>
               </div>
-              <button onclick="comment()" class="btn btn-primary">
-                Submit
-              </button>
-            </div>
+            </form>
           </div>
 
           <!-- Single Comment -->

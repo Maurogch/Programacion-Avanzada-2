@@ -15,7 +15,7 @@ function comment() {
   var text = document.getElementById('text').value;
 
   if (author == '' || text == '') {
-    alert('debe llenar los campos');
+    document.getElementById('form').reportValidity();
     return;
   }
 
