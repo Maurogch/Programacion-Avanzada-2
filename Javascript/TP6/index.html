@@ -83,6 +83,33 @@
             <div class="col-md-8">
               <h1 class="my-4">Bienvenido a mi asombroso Blog</h1>
 
+              <!-- Form -->
+              <div class="card mb-4" id="noposts">
+                <form id="form" onsubmit="post(); return false;">
+                  <h5 class="card-header">Que estás pensando?</h5>
+                  <div class="card-body">
+                    <div class="form-group">
+                      <input
+                        class="form-control"
+                        type="text"
+                        id="title"
+                        placeholder="Título"
+                        required
+                      />
+                      <textarea
+                        class="form-control"
+                        rows="3"
+                        id="body"
+                        required
+                      ></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                      Post
+                    </button>
+                  </div>
+                </form>
+              </div>
+
               <!-- Loader screen -->
               <div class="card mb-4" id="loader">
                 <img

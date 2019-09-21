@@ -2,6 +2,34 @@ function indexLoad() {
   asyncLoadPosts();
 }
 
+function post() {
+  var title = document.getElementById('title').value;
+  var body = document.getElementById('body').value;
+
+  if (title == '' || body == '') {
+    document.getElementById('form').reportValidity();
+    return;
+  }
+
+  var api =
+    'https://utn2019-avanzada2-tp6.herokuapp.com/api/posts?title=' +
+    title +
+    '&body=' +
+    body;
+
+  sendPost(api)
+    .then(result => {
+      document.getElementById('posts').innerHTML = '';
+      asyncLoadPosts();
+    })
+    .catch(err => {
+      console.log(err);
+      alert(
+        'Error al enviar comentario, recargue la página e intente de nuevo por favor '
+      );
+    });
+}
+
 async function asyncLoadPosts() {
   await loadPosts()
     .then(result => {
@@ -31,7 +59,7 @@ async function asyncLoadPosts() {
 
         let a = document.createElement('a');
         a.classList.add('btn', 'btn-primary');
-        a.href = document.URL + '/post.html?id=' + element.id;
+        a.href = document.URL + 'post.html?id=' + element.id;
         a.innerHTML = 'Seguir leyendo';
         div2.appendChild(a);
 
@@ -100,4 +128,28 @@ function noPosts() {
   if (posts.length < 1) {
     document.getElementById('noposts').removeAttribute('hidden');
   }
+}
+
+function sendPost(api) {
+  return new Promise((resolve, reject) => {
+    var request = new XMLHttpRequest();
+
+    request.open('POST', api);
+
+    request.responseType = 'json';
+
+    request.onload = function() {
+      if (request.status == 200) {
+        resolve(request.response);
+      } else {
+        reject(Error('Data load error'));
+      }
+    };
+
+    request.onerror = function() {
+      reject(Error('There was a network problem'));
+    };
+
+    request.send();
+  });
 }
