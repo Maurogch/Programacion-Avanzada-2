@@ -29,7 +29,9 @@ function comment() {
 
   sendComment(api)
     .then(result => {
-      location.reload();
+      //location.reload();
+      document.getElementById('comments').innerHTML = ''; //Rebuild comments intead of reloading entire page
+      setComments(id);
     })
     .catch(err => {
       console.log(err);
