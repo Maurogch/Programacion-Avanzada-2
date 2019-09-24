@@ -193,6 +193,6 @@ function pharseDate(input) {
     second: 'numeric'
   };
   let date = new Date(input);
-  date.setHours(date.getHours() - 3);
+  date.setHours(date.getHours() - (date.getTimezoneOffset()/60));
   return date.toLocaleDateString('es-US', options);
 }
