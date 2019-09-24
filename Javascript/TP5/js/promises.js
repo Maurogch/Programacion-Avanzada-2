@@ -1,8 +1,5 @@
 function onLoadTable() {
   var t = $('#dtTable').DataTable();
-  t.row
-    .add()
-    .draw(false); /*add div with loader, reasearch how to put colspan 6*/
 
   apiRequest()
     .then(response => {
@@ -14,12 +11,20 @@ function onLoadTable() {
     });
 }
 
+function deleteRow(row){
+  var t = $('#dtTable').DataTable();
+  t
+        .row( $(row).parents('tr') )
+        .remove()
+        .draw();
+}
+
 function apiRequest() {
   return new Promise(function(resolve, reject) {
     var request = new XMLHttpRequest();
     request.open(
       'GET',
-      'https://utn-2019-avanzada2-tp5.herokuapp.com/records?from=0&to=50'
+      'https://utn-2019-avanzada2-tp5.herokuapp.com/records?from=0&to=20'
     );
     request.responseType = 'json';
 
@@ -42,7 +47,8 @@ function apiRequest() {
 function loadTable(rows) {
   var t = $('#dtTable').DataTable();
   rows.forEach(item => {
-    /*var table = document.getElementById("dtTable");
+    /*Add row for simple tables (don't use with JQDataTables)
+        var table = document.getElementById("dtTable");
         var row = table.insertRow(1);
 
         var cell1 = row.insertCell();
@@ -66,7 +72,8 @@ function loadTable(rows) {
         item.last_name,
         item.email,
         item.gender,
-        item.last_connected_ip
+        item.last_connected_ip,
+        '<button onclick="deleteRow(this)">Delete</button>'
       ])
       .draw(false);
   });
