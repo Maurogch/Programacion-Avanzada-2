@@ -1,0 +1,220 @@
+{
+	// Place your global snippets here. Each snippet is defined under a snippet name and has a scope, prefix, body and 
+	// description. Add comma separated ids of the languages where the snippet is applicable in the scope field. If scope 
+	// is left empty or omitted, the snippet gets applied to all languages. The prefix is what is 
+	// used to trigger the snippet and the body will be expanded and inserted. Possible variables are: 
+	// $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. 
+	// Placeholders with the same ids are connected.
+	// Example:
+	// "Print to console": {
+	// 	"scope": "javascript,typescript",
+	// 	"prefix": "log",
+	// 	"body": [
+	// 		"console.log('$1');",
+	// 		"$2"
+	// 	],
+	// 	"description": "Log output to console"
+	// }
+
+	"Array from Object attribute": {
+		"scope": "javascript,typescript",
+		"prefix": "arrayFromObject",
+		"body": [
+			"var ${1:array} = Array.from(${2:array}, (a)=>{return ${3:object}.${4:attribute}}"
+			],
+		"description": "Funtion to sort an array by class attribute."
+	},
+
+	"Array sort by Class attribute": {
+		"scope": "javascript,typescript",
+		"prefix": "arraySort",
+		"body": [
+			"${1:array}.sort((a,b)=>{return (a.${2:attribute}).localeCompare(b.${2:attribute})});"
+			],
+		"description": "Funtion to sort an array by class attribute."
+	},
+
+	"Array Remove Duplicates Function": {
+		"scope": "javascript,typescript",
+		"prefix": "arrayRemoveDuplicates",
+		"body": [
+			"function removeDuplicates (arr){",
+			"\treturn arr.filter((v,i) => arr.indexOf(v) === i);",
+			"}",
+			],
+		"description": "Funtion to remove an duplicates from an array. Returns a new array."
+	},
+
+	"Array Remove Function": {
+		"scope": "javascript,typescript",
+		"prefix": "arrayRemove",
+		"body": [
+			"function arrayRemove(arr, value) {",
+			"\treturn arr.filter(function(ele){",
+			"\t\treturn ele != value;",
+			"\t});",
+			"}",
+			],
+		"description": "Funtion to remove an element from an array. Returns a new array."
+	},
+
+	"Custom Class": {
+		"scope": "javascript,typescript",
+		"prefix": "newClass",
+		"body": [
+			"export default class ${1:ClassName} {",
+			"\tconstructor(${2:attribute}){",
+			"\t\tthis._${2:attribute} = ${2:attribute};",
+			"\t}",
+			"",
+			"\t${3:method}() {",
+			"\t\t",
+			"\t}",
+			"",
+			"\tset ${2:attribute}(${2:attribute}) {",
+			"\t\tthis._${2:attribute} = ${2:attribute};",
+			"\t}",
+			"",
+			"\tget ${2:attribute}() {",
+			"\t\treturn this._${2:attribute};",
+			"\t}",
+			"}",
+			],
+		"description": "Create a custom class."
+	},
+
+	"For Custom Class": {
+		"scope": "javascript,typescript",
+		"prefix": "forClass",
+		"body": [
+			"for (var key in ${0:class}) {",
+			"\tconsole.log(key + ': ' + ${0:class}[key]);",
+			"}",
+			],
+		"description": "Iterate elements of a custom class."
+	},
+
+	"Convert Date": {
+		"scope": "javascript,typescript",
+		"prefix": ["dateConvert","datePharse"],
+		"body": [
+			"function pharseDate(input) {",
+			"\tlet options = {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric'};",
+			"\tlet date = new Date(input);",
+			"\tdate.setHours(date.getHours() - (date.getTimezoneOffset()/60));",
+			"\treturn date.toLocaleDateString('es-US', options);",
+			"}",
+			],
+		"description": "Convert date from a database to readable."
+	},
+
+	"URLSearchParams": {
+		"scope": "javascript,typescript",
+		"prefix": "getUrlParams",
+		"body": [
+			"var urlParams = new URLSearchParams(window.location.search);",
+			"var ${0:param} = urlParams.get('${0:param}');"
+			],
+		"description": "Get url params into a variable."
+	},
+
+	"Basic Promise": {
+		"scope": "javascript,typescript",
+		"prefix": "promise",
+		"body": [
+			"function promise(method, url, dataType = 'json') {",
+			"\treturn new Promise((resolve, reject) => {",
+			"\t\tvar request = new XMLHttpRequest();",
+			"",
+			"\t\trequest.open(method,url);",
+			"",
+			"\t\trequest.responseType = dataType;",
+			"",
+			"\t\trequest.onload = function () {",
+			"\t\t\tif (request.status == 200) {",
+			"\t\t\t\tresolve(request.response);",
+			"\t\t\t} else {",
+			"\t\t\t\treject(Error('Data load error'));",
+			"\t\t\t}",
+			"\t\t};",
+			"",
+			"\t\trequest.onerror = function () {",
+			"\t\t\treject(Error('There was a network problem'));",
+			"\t\t};",
+			"",
+			"\t\trequest.send();",
+			"\t});",
+			"}"
+			],
+		"description": "A basic promise."
+	},
+
+	"Resolve Promise": {
+		"scope": "javascript,typescript",
+		"prefix": "promiseRes",
+		"body": [
+			"promise('${1|GET,POST,PUT,DELETE|}', '${2:url}', '${3|json,blob,document,text|}').then((result) => {",
+			"\t$0",
+			"}).catch((err) => {",
+			"\tconsole.log(err);",
+			"});",
+			],
+		"description": "A promise resolution."
+	},
+
+	"Secuencial Promise": {
+		"scope": "javascript,typescript",
+		"prefix": "promiseSec",
+		"body": [
+			"async function secuencialPromises(){",
+			"\tawait promise('${1|GET,POST,PUT,DELETE|}', '${2:url}', '${3|json,blob,document,text|}').then((result) => {",
+			"\t$0",
+			"\t}).catch((err) => {",
+			"\tconsole.log(err);",
+			"\t});",
+			"",
+			"\tawait promise(method, url, dataType).then((result) => {",
+			"\t",
+			"\t}).catch((err) => {",
+			"\tconsole.log(err);",
+			"\t});",
+			"}",
+			"",
+			"function promise(method, url, dataType = 'json') {",
+			"\treturn new Promise((resolve, reject) => {",
+			"\t\tvar request = new XMLHttpRequest();",
+			"",
+			"\t\trequest.open(method,url);",
+			"",
+			"\t\trequest.responseType = dataType;",
+			"",
+			"\t\trequest.onload = function () {",
+			"\t\t\tif (request.status == 200) {",
+			"\t\t\t\tresolve(request.response);",
+			"\t\t\t} else {",
+			"\t\t\t\treject(Error('Data load error'));",
+			"\t\t\t}",
+			"\t\t};",
+			"",
+			"\t\trequest.onerror = function () {",
+			"\t\t\treject(Error('There was a network problem'));",
+			"\t\t};",
+			"",
+			"\t\trequest.send();",
+			"\t});",
+			"}"
+			],
+		"description": "A secuencial promise."
+	},
+
+	"Fori": {
+		"scope": "javascript,typescript",
+		"prefix": "fori",
+		"body": [
+			"for (let i = 0; i < ${1:var}; i++) {",
+			"\t$0",
+			"}"
+			],
+		"description": "Simple For i."
+	}
+}
