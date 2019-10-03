@@ -1,24 +1,36 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // Required for Material
+import * as $ from 'jquery';
 
-import { AppComponent } from './app.component';
+// App Modules
 import { AppRoutingModule } from './app-routing.module';
+import { AngularMaterialModule } from './shared/angular.material.module';
+import { MDBBootstrapModule } from 'angular-bootstrap-md';
+
+// App Components
+import { AppComponent } from './app.component';
 import { StudentAddComponent } from './components/student-add/student-add.component';
 import { StudentListComponent } from './components/student-list/student-list.component';
 import { StudentViewComponent } from './components/student-view/student-view.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import * as $ from 'jquery';
-import { MaterialModule } from './material.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     StudentAddComponent,
     StudentListComponent,
-    StudentViewComponent,
-    MaterialModule
+    StudentViewComponent
   ],
-  imports: [BrowserModule, AppRoutingModule, BrowserAnimationsModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    FormsModule,
+    ReactiveFormsModule,
+    AngularMaterialModule,
+    MDBBootstrapModule.forRoot()
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })
