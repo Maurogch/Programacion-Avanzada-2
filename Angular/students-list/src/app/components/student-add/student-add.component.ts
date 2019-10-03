@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./student-add.component.css']
 })
 export class StudentAddComponent implements OnInit {
+  text: String;
+
   constructor() {}
 
   ngOnInit() {}
