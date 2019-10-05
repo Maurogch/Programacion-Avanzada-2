@@ -7,6 +7,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class StudentAddComponent implements OnInit {
   text: String;
+  firstName: String;
+  lastName: String;
+  email: String;
+  address: String;
+  dni: String;
 
   constructor() {}
 

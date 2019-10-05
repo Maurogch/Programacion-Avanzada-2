@@ -8,6 +8,7 @@ import * as $ from 'jquery';
 import { AppRoutingModule } from './app-routing.module';
 import { AngularMaterialModule } from './shared/angular.material.module';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
+import { HttpClientModule } from '@angular/common/http';
 
 // App Components
 import { AppComponent } from './app.component';
@@ -29,6 +30,7 @@ import { StudentViewComponent } from './components/student-view/student-view.com
     FormsModule,
     ReactiveFormsModule,
     AngularMaterialModule,
+    HttpClientModule,
     MDBBootstrapModule.forRoot()
   ],
   providers: [],

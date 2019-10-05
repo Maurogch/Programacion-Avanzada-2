@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { StudentAsyncService } from 'src/app/services/student-async.service';
 
 @Component({
   selector: 'app-student-list',
@@ -6,15 +7,37 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./student-list.component.css']
 })
 export class StudentListComponent implements OnInit {
-  elements: any = [
-    { id: 1, first: 'Mark', last: 'Otto', handle: '@mdo' },
-    { id: 2, first: 'Jacob', last: 'Thornton', handle: '@fat' },
-    { id: 3, first: 'Larry', last: 'the Bird', handle: '@twitter' }
+  elements: any = [];
+
+  headElements = [
+    'ID',
+    'Nombre',
+    'Apellido',
+    'Email',
+    'Dirección',
+    'DNI',
+    'Borrar'
   ];
+  loading: boolean;
 
-  headElements = ['ID', 'First', 'Last', 'Handle'];
+  constructor(private studentAsyncService: StudentAsyncService) {}
 
-  constructor() {}
+  ngOnInit() {
+    this.loading = true;
 
-  ngOnInit() {}
+    this.studentAsyncService
+      .getAll()
+      .then(result => {
+        this.elements = result;
+      })
+      .catch(err => {
+        console.log(err);
+      });
+
+    this.loading = false;
+  }
+
+  delete(studentId: number) {
+    // Delete student api call
+  }
 }

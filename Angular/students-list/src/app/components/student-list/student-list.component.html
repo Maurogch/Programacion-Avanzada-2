@@ -9,10 +9,22 @@
         </thead>
         <tbody>
           <tr mdbTableCol *ngFor="let el of elements">
-            <th scope="row">{{ el.id }}</th>
-            <td>{{ el.first }}</td>
-            <td>{{ el.last }}</td>
-            <td>{{ el.handle }}</td>
+            <th scope="row">{{ el.studentId }}</th>
+            <td>{{ el.firstName }}</td>
+            <td>{{ el.lastName }}</td>
+            <td>{{ el.email }}</td>
+            <td>{{ el.address }}</td>
+            <td>{{ el.dni }}</td>
+            <td>
+              <button
+                (click)="delete(el.studentId)"
+                type="button"
+                mdbBtn
+                color="green"
+              >
+                Borrar
+              </button>
+            </td>
           </tr>
         </tbody>
       </table>
