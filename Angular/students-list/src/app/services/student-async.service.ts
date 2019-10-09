@@ -6,7 +6,7 @@ import { Student } from '../models/student';
   providedIn: 'root'
 })
 export class StudentAsyncService {
-  private apiURL = 'https://utn2019-avanzada2-tp8.herokuapp.com/api/students';
+  private apiURL = 'https://utn2019-avanzada2-tp8.herokuapp.com/api/students/';
 
   constructor(private http: HttpClient) {}
 

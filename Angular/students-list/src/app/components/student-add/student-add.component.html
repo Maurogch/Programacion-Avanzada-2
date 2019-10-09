@@ -1,13 +1,8 @@
 <div class="container" id="card">
-  <p>test: {{ text }}</p>
-  <!-- Using FormGroups -->
-  <p>test2: {{ f.controls['input3']?.value }}</p>
-</div>
-<div class="container" id="card">
   <div class="row">
     <div class="col-md-12" style="padding-top: 2em">
       <!-- Extended material form grid -->
-      <form #f="ngForm">
+      <form #f="ngForm" id="form" (submit)="add(f)">
         <!-- Grid row -->
         <div class="form-row">
           <!-- Grid column -->
@@ -15,15 +10,22 @@
             <!-- Material input -->
             <div class="md-form form-group">
               <input
+                [(ngModel)]="student.firstName"
                 mdbInput
                 type="text"
                 class="form-control"
-                id="inputName"
+                id="inputFirstName"
                 placeholder="Nombre"
                 name="firstName"
-                [(NgModel)]=""
+                required
+                #name="ngModel"
               />
-              <label for="inputEmail4MD">Email</label>
+              <label for="inputEmail4MD">Nombre</label>
+              <div *ngIf="name.invalid" class="alert alert-danger">
+                <div *ngIf="!!name.errors?.required">
+                  Nombre es requerido.
+                </div>
+              </div>
             </div>
           </div>
           <!-- Grid column -->
@@ -33,14 +35,16 @@
             <!-- Material input -->
             <div class="md-form form-group">
               <input
+                [(ngModel)]="student.lastName"
                 mdbInput
-                type="password"
+                type="text"
                 class="form-control"
-                id="inputPassword4MD"
-                placeholder="Password"
-                name="input2"
+                id="inputLastName"
+                placeholder="Apellido"
+                name="lastName"
+                required
               />
-              <label for="inputPassword4MD">Password</label>
+              <label for="inputPassword4MD">Apellido</label>
             </div>
           </div>
           <!-- Grid column -->
@@ -50,19 +54,44 @@
         <!-- Grid row -->
         <div class="row">
           <!-- Grid column -->
-          <div class="col-md-12">
+          <div class="col-md-6">
             <!-- Material input -->
             <div class="md-form form-group">
               <input
-                [(ngModel)]="text"
+                [(ngModel)]="student.email"
                 mdbInput
-                type="text"
+                type="email"
                 class="form-control"
-                id="inputAddressMD"
-                placeholder="1234 Main St"
-                name="input3"
+                id="inputEmail"
+                placeholder="email@servidor.com"
+                name="email"
+                required
               />
-              <label for="inputAddressMD">Address</label>
+              <label for="inputAddressMD">Email</label>
+            </div>
+          </div>
+          <!-- Grid column -->
+
+          <!-- Grid column -->
+          <div class="col-md-6">
+            <!-- Material input -->
+            <div class="md-form form-group">
+              <select
+                class="browser-default custom-select"
+                [(ngModel)]="student.careerId"
+                name="career"
+                ng-init="0"
+              >
+                <option ng-selected="true" value="0"
+                  >Seleccione una Carrera</option
+                >
+                <option
+                  *ngFor="let career of careers"
+                  [ngValue]="career.careerId"
+                >
+                  {{ career.name }}
+                </option>
+              </select>
             </div>
           </div>
           <!-- Grid column -->
@@ -72,14 +101,16 @@
             <!-- Material input -->
             <div class="md-form form-group">
               <input
+                [(ngModel)]="student.address"
                 mdbInput
                 type="text"
                 class="form-control"
-                id="inputAddress2MD"
-                placeholder="Apartment, studio, or floor"
-                name="input4"
+                id="inputAddress"
+                placeholder="Departamento, estudio, o piso"
+                name="address"
+                required
               />
-              <label for="inputAddress2MD">Address 2</label>
+              <label for="inputAddress2MD">Dirección</label>
             </div>
           </div>
           <!-- Grid column -->
@@ -89,35 +120,20 @@
         <!-- Grid row -->
         <div class="form-row">
           <!-- Grid column -->
-          <div class="col-md-6">
+          <div class="col-md-12">
             <!-- Material input -->
             <div class="md-form form-group">
               <input
+                [(ngModel)]="student.dni"
                 mdbInput
-                type="text"
+                type="number"
                 class="form-control"
-                id="inputCityMD"
-                placeholder="New York City"
-                name="input5"
+                id="inputDni"
+                placeholder="DNI"
+                name="dni"
+                required
               />
-              <label for="inputCityMD">City</label>
-            </div>
-          </div>
-          <!-- Grid column -->
-
-          <!-- Grid column -->
-          <div class="col-md-6">
-            <!-- Material input -->
-            <div class="md-form form-group">
-              <input
-                mdbInput
-                type="text"
-                class="form-control"
-                id="inputZipMD"
-                placeholder="11206-1117"
-                name="input6"
-              />
-              <label for="inputZipMD">Zip</label>
+              <label for="inputCityMD">DNI</label>
             </div>
           </div>
           <!-- Grid column -->
@@ -125,11 +141,19 @@
         <!-- Grid row -->
         <div style="text-align: center">
           <div style="display: inline-block">
-            <button type="button" mdbBtn color="primary">Send</button>
+            <button type="submit" mdbBtn color="primary">
+              Agregar
+            </button>
           </div>
         </div>
       </form>
       <!-- Extended material form grid -->
     </div>
   </div>
+</div>
+<div class="container" id="card">
+  Double Binding test:
+  <p>Test: {{ student.firstName }}</p>
+  <!-- Using FormGroups -->
+  <p>Test2: {{ f.controls['lastName']?.value }}</p>
 </div>
