@@ -8,7 +8,11 @@
           </tr>
         </thead>
         <tbody>
-          <tr mdbTableCol *ngFor="let el of elements">
+          <tr
+            mdbTableCol
+            *ngFor="let el of elements"
+            [routerLink]="['/view', el.studentId]"
+          >
             <th scope="row">{{ el.studentId }}</th>
             <td>{{ el.firstName }}</td>
             <td>{{ el.lastName }}</td>
@@ -17,10 +21,26 @@
             <td>{{ el.dni }}</td>
             <td>
               <button
+                (click)="edit(el.studentId)"
+                type="button"
+                mdbBtn
+                color="green"
+                class="waves-light"
+                mdbWavesEffect
+                size="sm"
+              >
+                Editar
+              </button>
+            </td>
+            <td>
+              <button
                 (click)="delete(el.studentId)"
                 type="button"
                 mdbBtn
                 color="green"
+                class="waves-light"
+                mdbWavesEffect
+                size="sm"
               >
                 Borrar
               </button>
@@ -28,6 +48,11 @@
           </tr>
         </tbody>
       </table>
+      <div class="d-flex justify-content-center" *ngIf="loading">
+        <div class="spinner-border text-primary" role="status">
+          <span class="sr-only">Cargando...</span>
+        </div>
+      </div>
     </div>
   </div>
 </div>
