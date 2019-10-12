@@ -27,4 +27,8 @@ export class StudentAsyncService {
 
     return this.http.post(this.apiURL, student, httpOptions).toPromise();
   }
+
+  delete(studentId: number): Promise<any> {
+    return this.http.delete(this.apiURL + studentId).toPromise();
+  }
 }

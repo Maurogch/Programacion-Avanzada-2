@@ -17,8 +17,8 @@ export class StudentListComponent implements OnInit {
     'Email',
     'Dirección',
     'DNI',
-    'Borrar',
-    'Editar'
+    'Editar',
+    'Borrar'
   ];
   loading = true;
 
@@ -47,7 +47,26 @@ export class StudentListComponent implements OnInit {
   }
 
   delete(studentId: number) {
-    // Delete student api call
+    this.studentAsyncService
+      .delete(studentId)
+      .then(result => {
+        console.log(result);
+        this.snackBar.open('Estudiante borrado con exito', 'Cerrar', {
+          duration: 4000
+        });
+
+        this.arrayRemove(studentId);
+      })
+      .catch(err => {
+        console.log(err);
+        this.snackBar.open(
+          'Ops hubo un error borrar el estudiante, refresque la página e intente de nuevo',
+          'Cerrar',
+          {
+            duration: 4000
+          }
+        );
+      });
   }
 
   edit(studentId: number) {
@@ -56,5 +75,11 @@ export class StudentListComponent implements OnInit {
 
   test(el) {
     console.log(el);
+  }
+
+  private arrayRemove(value) {
+    this.elements = this.elements.filter(function(ele) {
+      return ele.studentId !== value;
+    });
   }
 }

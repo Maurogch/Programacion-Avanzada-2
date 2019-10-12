@@ -8,17 +8,15 @@
           </tr>
         </thead>
         <tbody>
-          <tr
-            mdbTableCol
-            *ngFor="let el of elements"
-            [routerLink]="['/view', el.studentId]"
-          >
-            <th scope="row">{{ el.studentId }}</th>
-            <td>{{ el.firstName }}</td>
-            <td>{{ el.lastName }}</td>
-            <td>{{ el.email }}</td>
-            <td>{{ el.address }}</td>
-            <td>{{ el.dni }}</td>
+          <tr mdbTableCol *ngFor="let el of elements">
+            <th [routerLink]="['/view', el.studentId]" scope="row">
+              {{ el.studentId }}
+            </th>
+            <td [routerLink]="['/view', el.studentId]">{{ el.firstName }}</td>
+            <td [routerLink]="['/view', el.studentId]">{{ el.lastName }}</td>
+            <td [routerLink]="['/view', el.studentId]">{{ el.email }}</td>
+            <td [routerLink]="['/view', el.studentId]">{{ el.address }}</td>
+            <td [routerLink]="['/view', el.studentId]">{{ el.dni }}</td>
             <td>
               <button
                 (click)="edit(el.studentId)"
