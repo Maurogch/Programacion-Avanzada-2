@@ -18,7 +18,7 @@ export class StudentAsyncService {
     return this.http.get(this.apiURL + studentId).toPromise();
   }
 
-  add(student: Student): Promise<any> {
+  add(student: any): Promise<any> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json'

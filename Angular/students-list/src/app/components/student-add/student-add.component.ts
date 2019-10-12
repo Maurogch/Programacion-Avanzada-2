@@ -2,9 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { StudentAsyncService } from 'src/app/services/student-async.service';
 import { CareerAsyncService } from 'src/app/services/career-async.service';
 import { Student } from 'src/app/models/student';
-import { Career } from 'src/app/models/career';
 import { MatSnackBar } from '@angular/material';
-import { NgForm } from '@angular/forms';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-student-add',
@@ -13,13 +12,31 @@ import { NgForm } from '@angular/forms';
 })
 export class StudentAddComponent implements OnInit {
   student: Student = new Student();
-  careers: Array<Career> = [];
+  careers: Array<any> = [];
+  studentForm: FormGroup;
 
   constructor(
     private studentAsyncService: StudentAsyncService,
     private careerAsyncService: CareerAsyncService,
-    private snackBar: MatSnackBar
-  ) {}
+    private snackBar: MatSnackBar,
+    private formBuilder: FormBuilder
+  ) {
+    this.studentForm = this.formBuilder.group({
+      firstName: ['', { validators: [Validators.required], updateOn: 'blur' }],
+      lastName: ['', { validators: [Validators.required], updateOn: 'blur' }],
+      email: [
+        '',
+        {
+          validators: [Validators.required, Validators.email],
+          asyncValidators: [], // asyncValidationFunction()
+          updateOn: 'blur'
+        }
+      ],
+      career: ['', { validators: [Validators.required], updateOn: 'blur' }],
+      address: ['', { validators: [Validators.required], updateOn: 'blur' }],
+      dni: ['', [Validators.required, Validators.minLength(6)]]
+    });
+  }
 
   ngOnInit() {
     this.careerAsyncService
@@ -39,15 +56,20 @@ export class StudentAddComponent implements OnInit {
       });
   }
 
-  add(form: NgForm) {
-    console.log(this.student);
-    /*this.studentAsyncService
-      .add(this.student)
+  add() {
+    // Transform data to a valid json request
+    const request = Object.assign({}, this.studentForm.value); // Map form values to object
+    request['careerId'] = request.career; // create new key
+    delete request.career; // delete key
+
+    this.studentAsyncService
+      .add(request)
       .then(result => {
         this.snackBar.open('Alumno agregado exitosamente', 'Cerrar', {
           duration: 4000
         });
-        form.reset();
+
+        this.studentForm.reset();
         console.log(result);
       })
       .catch(err => {
@@ -59,6 +81,25 @@ export class StudentAddComponent implements OnInit {
           }
         );
         console.log(err);
-      });*/
+      });
+  }
+
+  get firstName() {
+    return this.studentForm.get('firstName');
+  }
+  get lastName() {
+    return this.studentForm.get('lastName');
+  }
+  get email() {
+    return this.studentForm.get('email');
+  }
+  get career() {
+    return this.studentForm.get('career');
+  }
+  get address() {
+    return this.studentForm.get('address');
+  }
+  get dni() {
+    return this.studentForm.get('dni');
   }
 }

@@ -2,89 +2,108 @@
   <div class="row">
     <div class="col-md-12" style="padding-top: 2em">
       <!-- Extended material form grid -->
-      <form #f="ngForm" id="form" (submit)="add(f)">
-        <!-- Grid row -->
+      <form [formGroup]="studentForm" id="form" (ngSubmit)="add()">
+        <!-- Start Grid row -->
         <div class="form-row">
-          <!-- Grid column -->
+          <!-- Start Grid column -->
           <div class="col-md-6">
             <!-- Material input -->
             <div class="md-form form-group">
               <input
-                [(ngModel)]="student.firstName"
+                formControlName="firstName"
                 mdbInput
                 type="text"
                 class="form-control"
                 id="inputFirstName"
                 placeholder="Nombre"
-                name="firstName"
-                required
-                #name="ngModel"
               />
               <label for="inputEmail4MD">Nombre</label>
-              <div *ngIf="name.invalid" class="alert alert-danger">
-                <div *ngIf="!!name.errors?.required">
+              <!-- Validation -->
+              <div
+                *ngIf="
+                  firstName.invalid && (firstName.dirty || firstName.touched)
+                "
+                class="alert alert-danger"
+              >
+                <div *ngIf="firstName.errors.required">
                   Nombre es requerido.
                 </div>
               </div>
             </div>
           </div>
-          <!-- Grid column -->
+          <!-- End Grid column -->
 
-          <!-- Grid column -->
+          <!-- Start Grid column -->
           <div class="col-md-6">
             <!-- Material input -->
             <div class="md-form form-group">
               <input
-                [(ngModel)]="student.lastName"
+                formControlName="lastName"
                 mdbInput
                 type="text"
                 class="form-control"
                 id="inputLastName"
                 placeholder="Apellido"
-                name="lastName"
-                required
               />
               <label for="inputPassword4MD">Apellido</label>
+              <!-- Validation -->
+              <div
+                *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)"
+                class="alert alert-danger"
+              >
+                <div *ngIf="lastName.errors.required">
+                  Apellido es requerido.
+                </div>
+              </div>
             </div>
           </div>
-          <!-- Grid column -->
+          <!-- End Grid column -->
         </div>
-        <!-- Grid row -->
+        <!-- End Grid row -->
 
-        <!-- Grid row -->
+        <!-- Start Grid row -->
         <div class="row">
-          <!-- Grid column -->
+          <!-- Start Grid column -->
           <div class="col-md-6">
             <!-- Material input -->
             <div class="md-form form-group">
               <input
-                [(ngModel)]="student.email"
+                formControlName="email"
                 mdbInput
                 type="email"
                 class="form-control"
                 id="inputEmail"
                 placeholder="email@servidor.com"
-                name="email"
-                required
               />
               <label for="inputAddressMD">Email</label>
+              <!-- Validation -->
+              <div
+                *ngIf="email.invalid && (email.dirty || email.touched)"
+                class="alert alert-danger"
+              >
+                <div *ngIf="email.errors.required">
+                  Email es requerido.
+                </div>
+                <div *ngIf="email.errors.email">
+                  Email ingresado no válido.
+                </div>
+              </div>
             </div>
           </div>
-          <!-- Grid column -->
+          <!-- End Grid column -->
 
-          <!-- Grid column -->
+          <!-- Start Grid column -->
           <div class="col-md-6">
             <!-- Material input -->
             <div class="md-form form-group">
               <select
+                formControlName="career"
                 class="browser-default custom-select"
-                [(ngModel)]="student.careerId"
-                name="career"
-                ng-init="0"
               >
-                <option ng-selected="true" value="0"
-                  >Seleccione una Carrera</option
-                >
+                <option disabled value="null">
+                  <!-- value="null" needs to be there, otherwise it won't accept it as default option -->
+                  Seleccione una Carrera
+                </option>
                 <option
                   *ngFor="let career of careers"
                   [ngValue]="career.careerId"
@@ -92,56 +111,88 @@
                   {{ career.name }}
                 </option>
               </select>
+              <!-- Validation -->
+              <div
+                *ngIf="career.invalid && (career.dirty || career.touched)"
+                class="alert alert-danger"
+              >
+                <div *ngIf="career.errors.required">
+                  Carrera es requerido.
+                </div>
+              </div>
             </div>
           </div>
-          <!-- Grid column -->
+          <!-- End Grid column -->
 
-          <!-- Grid column -->
+          <!-- Start Grid column -->
           <div class="col-md-12">
             <!-- Material input -->
             <div class="md-form form-group">
               <input
-                [(ngModel)]="student.address"
+                formControlName="address"
                 mdbInput
                 type="text"
                 class="form-control"
                 id="inputAddress"
                 placeholder="Departamento, estudio, o piso"
-                name="address"
-                required
               />
               <label for="inputAddress2MD">Dirección</label>
+              <!-- Validation -->
+              <div
+                *ngIf="address.invalid && (address.dirty || address.touched)"
+                class="alert alert-danger"
+              >
+                <div *ngIf="address.errors.required">
+                  Dirección es requerida.
+                </div>
+              </div>
             </div>
           </div>
-          <!-- Grid column -->
+          <!-- End Grid column -->
         </div>
-        <!-- Grid row -->
+        <!-- End Grid row -->
 
-        <!-- Grid row -->
+        <!-- Start Grid row -->
         <div class="form-row">
-          <!-- Grid column -->
+          <!-- Start Grid column -->
           <div class="col-md-12">
             <!-- Material input -->
             <div class="md-form form-group">
               <input
-                [(ngModel)]="student.dni"
+                formControlName="dni"
                 mdbInput
                 type="number"
                 class="form-control"
                 id="inputDni"
                 placeholder="DNI"
-                name="dni"
-                required
               />
               <label for="inputCityMD">DNI</label>
+              <!-- Validation -->
+              <div
+                *ngIf="dni.invalid && (dni.dirty || dni.touched)"
+                class="alert alert-danger"
+              >
+                <div *ngIf="dni.errors.required">
+                  DNI es requerido.
+                </div>
+                <div *ngIf="dni.errors.minlength">
+                  DNI debe tener al menos 6 carácters.
+                </div>
+              </div>
             </div>
           </div>
-          <!-- Grid column -->
+          <!-- End Grid column -->
         </div>
         <!-- Grid row -->
         <div style="text-align: center">
           <div style="display: inline-block">
-            <button type="submit" mdbBtn color="primary">
+            <!-- [disabled] = disable button until all validations are checked -->
+            <button
+              type="submit"
+              [disabled]="!studentForm.valid"
+              mdbBtn
+              color="primary"
+            >
               Agregar
             </button>
           </div>
@@ -150,10 +201,4 @@
       <!-- Extended material form grid -->
     </div>
   </div>
-</div>
-<div class="container" id="card">
-  Double Binding test:
-  <p>Test: {{ student.firstName }}</p>
-  <!-- Using FormGroups -->
-  <p>Test2: {{ f.controls['lastName']?.value }}</p>
 </div>
