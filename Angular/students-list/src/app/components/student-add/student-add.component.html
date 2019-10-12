@@ -12,6 +12,7 @@
               <input
                 formControlName="firstName"
                 mdbInput
+                mdbValidate
                 type="text"
                 class="form-control"
                 id="inputFirstName"
@@ -19,16 +20,17 @@
               />
               <label for="inputEmail4MD">Nombre</label>
               <!-- Validation -->
-              <div
+              <mdb-error
                 *ngIf="
                   firstName.invalid && (firstName.dirty || firstName.touched)
                 "
-                class="alert alert-danger"
+                >Nombre requerido</mdb-error
               >
-                <div *ngIf="firstName.errors.required">
-                  Nombre es requerido.
-                </div>
-              </div>
+              <mdb-success
+                *ngIf="
+                  firstName.valid && (firstName.dirty || firstName.touched)
+                "
+              ></mdb-success>
             </div>
           </div>
           <!-- End Grid column -->
@@ -40,6 +42,7 @@
               <input
                 formControlName="lastName"
                 mdbInput
+                mdbValidate
                 type="text"
                 class="form-control"
                 id="inputLastName"
@@ -47,14 +50,13 @@
               />
               <label for="inputPassword4MD">Apellido</label>
               <!-- Validation -->
-              <div
+              <mdb-error
                 *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)"
-                class="alert alert-danger"
+                >Apellido requerido</mdb-error
               >
-                <div *ngIf="lastName.errors.required">
-                  Apellido es requerido.
-                </div>
-              </div>
+              <mdb-success
+                *ngIf="lastName.valid && (lastName.dirty || lastName.touched)"
+              ></mdb-success>
             </div>
           </div>
           <!-- End Grid column -->
@@ -70,6 +72,7 @@
               <input
                 formControlName="email"
                 mdbInput
+                mdbValidate
                 type="email"
                 class="form-control"
                 id="inputEmail"
@@ -77,49 +80,48 @@
               />
               <label for="inputAddressMD">Email</label>
               <!-- Validation -->
-              <div
-                *ngIf="email.invalid && (email.dirty || email.touched)"
-                class="alert alert-danger"
+              <mdb-error
+                *ngIf="
+                  email.invalid &&
+                  (email.dirty || email.touched) &&
+                  email.errors.required
+                "
+                >Email requerido</mdb-error
               >
-                <div *ngIf="email.errors.required">
-                  Email es requerido.
-                </div>
-                <div *ngIf="email.errors.email">
-                  Email ingresado no válido.
-                </div>
-              </div>
+              <mdb-error
+                *ngIf="
+                  email.invalid &&
+                  (email.dirty || email.touched) &&
+                  email.errors.email
+                "
+                >Email no válido</mdb-error
+              >
+              <mdb-success
+                *ngIf="email.valid && (email.dirty || email.touched)"
+              ></mdb-success>
             </div>
           </div>
           <!-- End Grid column -->
 
           <!-- Start Grid column -->
           <div class="col-md-6">
-            <!-- Material input -->
+            <!-- Pure Material Select (MDB one was ugly and this one can validate) -->
             <div class="md-form form-group">
-              <select
-                formControlName="career"
-                class="browser-default custom-select"
-              >
-                <option disabled value="null">
-                  <!-- value="null" needs to be there, otherwise it won't accept it as default option -->
-                  Seleccione una Carrera
-                </option>
-                <option
-                  *ngFor="let career of careers"
-                  [ngValue]="career.careerId"
+              <mat-form-field style="width:35vw">
+                <mat-label>Seleccione una Carrera</mat-label>
+                <mat-select formControlName="career">
+                  <mat-option
+                    *ngFor="let career of careers"
+                    [value]="career.careerId"
+                    >{{ career.name }}</mat-option
+                  >
+                </mat-select>
+                <!-- Validation -->
+                <mat-error
+                  *ngIf="career.valid && (career.dirty || career.touched)"
+                  >Debe seleccionar una carrera</mat-error
                 >
-                  {{ career.name }}
-                </option>
-              </select>
-              <!-- Validation -->
-              <div
-                *ngIf="career.invalid && (career.dirty || career.touched)"
-                class="alert alert-danger"
-              >
-                <div *ngIf="career.errors.required">
-                  Carrera es requerido.
-                </div>
-              </div>
+              </mat-form-field>
             </div>
           </div>
           <!-- End Grid column -->
@@ -131,6 +133,7 @@
               <input
                 formControlName="address"
                 mdbInput
+                mdbValidate
                 type="text"
                 class="form-control"
                 id="inputAddress"
@@ -138,14 +141,13 @@
               />
               <label for="inputAddress2MD">Dirección</label>
               <!-- Validation -->
-              <div
+              <mdb-error
                 *ngIf="address.invalid && (address.dirty || address.touched)"
-                class="alert alert-danger"
+                >Dirección requerida</mdb-error
               >
-                <div *ngIf="address.errors.required">
-                  Dirección es requerida.
-                </div>
-              </div>
+              <mdb-success
+                *ngIf="address.valid && (address.dirty || address.touched)"
+              ></mdb-success>
             </div>
           </div>
           <!-- End Grid column -->
@@ -161,6 +163,7 @@
               <input
                 formControlName="dni"
                 mdbInput
+                mdbValidate
                 type="number"
                 class="form-control"
                 id="inputDni"
@@ -168,17 +171,12 @@
               />
               <label for="inputCityMD">DNI</label>
               <!-- Validation -->
-              <div
-                *ngIf="dni.invalid && (dni.dirty || dni.touched)"
-                class="alert alert-danger"
+              <mdb-error *ngIf="dni.invalid && (dni.dirty || dni.touched)"
+                >DNI requerido</mdb-error
               >
-                <div *ngIf="dni.errors.required">
-                  DNI es requerido.
-                </div>
-                <div *ngIf="dni.errors.minlength">
-                  DNI debe tener al menos 6 carácters.
-                </div>
-              </div>
+              <mdb-success
+                *ngIf="dni.valid && (dni.dirty || dni.touched)"
+              ></mdb-success>
             </div>
           </div>
           <!-- End Grid column -->
