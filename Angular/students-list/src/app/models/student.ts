@@ -10,8 +10,8 @@ export class Student {
   private _address: string;
 
   constructor(
+    career: Career = new Career(),
     studentId?: number,
-    career?: Career,
     lastName?: string,
     firstName?: string,
     dni?: string,

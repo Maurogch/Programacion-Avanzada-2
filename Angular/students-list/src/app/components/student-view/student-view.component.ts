@@ -12,8 +12,8 @@ import { CareerAsyncService } from 'src/app/services/career-async.service';
   styleUrls: ['./student-view.component.css']
 })
 export class StudentViewComponent implements OnInit {
-  private student: Student = new Student();
-  private careers: Array<any>;
+  student: Student = new Student();
+  loader = true;
 
   constructor(
     private studentAsyncService: StudentAsyncService,
@@ -25,41 +25,31 @@ export class StudentViewComponent implements OnInit {
   ngOnInit() {
     // Get id from route
     const studentId = Number(this.route.snapshot.paramMap.get('id'));
-    // ----------------------------  NEEDS A PROMISE ALL -------------------------------------------------------------
-    this.studentAsyncService
-      .getById(studentId)
-      .then(result => {
-        this.student = new Student(
-          result.studentId,
-          new Career(result.careerId),
-          result.lastName,
-          result.firsName,
-          result.dni,
-          result.email,
-          result.address
-        );
-      })
-      .catch(err => {
-        this.snackBar.open(
-          'Ops hubo un error al cargar el estudiante, refresque la página',
-          'Cerrar',
-          {
-            duration: 4000
-          }
-        );
-        console.log(err);
-      });
 
-    this.careerAsyncService
-      .getAll()
+    Promise.all([
+      this.studentAsyncService.getById(studentId),
+      this.careerAsyncService.getAll()
+    ])
       .then(result => {
-        console.log(result);
-        result.forEach(element => {
-          console.log(element);
+        const resStudent = result[0];
+
+        this.student = new Student(
+          new Career(resStudent.careerId),
+          resStudent.studentId,
+          resStudent.lastName,
+          resStudent.firstName,
+          resStudent.dni,
+          resStudent.email,
+          resStudent.address
+        );
+
+        result[1].forEach(element => {
           if (element.careerId === this.student.career.careerId) {
-            this.student.career.name == element.name;
+            this.student.career.name = element.name;
           }
         });
+
+        this.loader = false;
       })
       .catch(err => {
         this.snackBar.open(
@@ -71,7 +61,5 @@ export class StudentViewComponent implements OnInit {
         );
         console.log(err);
       });
-
-    console.log(this.student);
   }
 }

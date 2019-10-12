@@ -2,7 +2,7 @@ export class Career {
   private _careerId: number;
   private _name: string;
 
-  constructor(careerId: number, name?: string) {
+  constructor(careerId?: number, name?: string) {
     this._careerId = careerId;
     this._name = name;
   }
