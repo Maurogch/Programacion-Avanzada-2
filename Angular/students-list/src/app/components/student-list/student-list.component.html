@@ -17,6 +17,7 @@
             <td [routerLink]="['/view', el.studentId]">{{ el.email }}</td>
             <td [routerLink]="['/view', el.studentId]">{{ el.address }}</td>
             <td [routerLink]="['/view', el.studentId]">{{ el.dni }}</td>
+            <td [routerLink]="['/view', el.studentId]">{{ el.careerName }}</td>
             <td>
               <button
                 (click)="edit(el.studentId)"

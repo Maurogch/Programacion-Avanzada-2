@@ -1,5 +1,8 @@
+import { Career } from 'src/app/models/career';
+import { element } from 'protractor';
 import { Component, OnInit } from '@angular/core';
 import { StudentAsyncService } from 'src/app/services/student-async.service';
+import { CareerAsyncService } from 'src/app/services/career-async.service';
 import { MatSnackBar } from '@angular/material';
 
 @Component({
@@ -17,6 +20,7 @@ export class StudentListComponent implements OnInit {
     'Email',
     'Dirección',
     'DNI',
+    'Carrera',
     'Editar',
     'Borrar'
   ];
@@ -24,14 +28,31 @@ export class StudentListComponent implements OnInit {
 
   constructor(
     private studentAsyncService: StudentAsyncService,
+    private careerAsyncService: CareerAsyncService,
     private snackBar: MatSnackBar
   ) {}
 
   ngOnInit() {
-    this.studentAsyncService
-      .getAll()
+    Promise.all([
+      this.studentAsyncService.getAll(),
+      this.careerAsyncService.getAll()
+    ])
       .then(result => {
-        this.elements = result;
+        this.elements = result[0];
+
+        // Map career name
+        this.elements.forEach(el => {
+          if (el.careerId === null) {
+            el.careerName = 'Sin carrera';
+          } else {
+            result[1].forEach(carrer => {
+              if (el.careerId === carrer.careerId) {
+                el.careerName = carrer.name;
+              }
+            });
+          }
+        });
+
         this.loading = false;
       })
       .catch(err => {
@@ -67,10 +88,6 @@ export class StudentListComponent implements OnInit {
           }
         );
       });
-  }
-
-  edit(studentId: number) {
-    // todo
   }
 
   test(el) {
