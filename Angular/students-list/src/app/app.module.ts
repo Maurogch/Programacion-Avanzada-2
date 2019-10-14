@@ -15,13 +15,15 @@ import { AppComponent } from './app.component';
 import { StudentAddComponent } from './components/student-add/student-add.component';
 import { StudentListComponent } from './components/student-list/student-list.component';
 import { StudentViewComponent } from './components/student-view/student-view.component';
+import { StudentPatchComponent } from './components/student-patch/student-patch.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     StudentAddComponent,
     StudentListComponent,
-    StudentViewComponent
+    StudentViewComponent,
+    StudentPatchComponent
   ],
   imports: [
     BrowserModule,

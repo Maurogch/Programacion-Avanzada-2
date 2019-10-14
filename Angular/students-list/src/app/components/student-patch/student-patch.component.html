@@ -1,0 +1,204 @@
+<div class="container" id="card">
+  <div class="row">
+    <div class="col-md-12" style="padding-top: 2em">
+      <!-- Extended material form grid -->
+      <form [formGroup]="studentForm" id="form" (ngSubmit)="edit()">
+        <!-- Start Grid row -->
+        <div class="form-row">
+          <!-- Start Grid column -->
+          <div class="col-md-6">
+            <!-- Material input -->
+            <div class="md-form form-group">
+              <input
+                formControlName="firstName"
+                mdbInput
+                mdbValidate
+                type="text"
+                class="form-control"
+                id="inputFirstName"
+                placeholder="Nombre"
+              />
+              <label for="inputEmail4MD">Nombre</label>
+              <!-- Validation -->
+              <mdb-error
+                *ngIf="
+                  firstName.invalid && (firstName.dirty || firstName.touched)
+                "
+                >Nombre requerido</mdb-error
+              >
+              <mdb-success
+                *ngIf="
+                  firstName.valid && (firstName.dirty || firstName.touched)
+                "
+              ></mdb-success>
+            </div>
+          </div>
+          <!-- End Grid column -->
+
+          <!-- Start Grid column -->
+          <div class="col-md-6">
+            <!-- Material input -->
+            <div class="md-form form-group">
+              <input
+                formControlName="lastName"
+                mdbInput
+                mdbValidate
+                type="text"
+                class="form-control"
+                id="inputLastName"
+                placeholder="Apellido"
+              />
+              <label for="inputPassword4MD">Apellido</label>
+              <!-- Validation -->
+              <mdb-error
+                *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)"
+                >Apellido requerido</mdb-error
+              >
+              <mdb-success
+                *ngIf="lastName.valid && (lastName.dirty || lastName.touched)"
+              ></mdb-success>
+            </div>
+          </div>
+          <!-- End Grid column -->
+        </div>
+        <!-- End Grid row -->
+
+        <!-- Start Grid row -->
+        <div class="row">
+          <!-- Start Grid column -->
+          <div class="col-md-6">
+            <!-- Material input -->
+            <div class="md-form form-group">
+              <input
+                formControlName="email"
+                mdbInput
+                mdbValidate
+                type="email"
+                class="form-control"
+                id="inputEmail"
+                placeholder="email@servidor.com"
+              />
+              <label for="inputAddressMD">Email</label>
+              <!-- Validation -->
+              <mdb-error
+                *ngIf="
+                  email.invalid &&
+                  (email.dirty || email.touched) &&
+                  email.errors.required
+                "
+                >Email requerido</mdb-error
+              >
+              <mdb-error
+                *ngIf="
+                  email.invalid &&
+                  (email.dirty || email.touched) &&
+                  email.errors.email
+                "
+                >Email no válido</mdb-error
+              >
+              <mdb-success
+                *ngIf="email.valid && (email.dirty || email.touched)"
+              ></mdb-success>
+            </div>
+          </div>
+          <!-- End Grid column -->
+
+          <!-- Start Grid column -->
+          <div class="col-md-6">
+            <!-- Pure Material Select (MDB one was ugly and this one can validate) -->
+            <div class="md-form form-group">
+              <mat-form-field style="width:35vw">
+                <mat-label>Seleccione una Carrera</mat-label>
+                <mat-select formControlName="career">
+                  <mat-option
+                    *ngFor="let career of careers"
+                    [value]="career.careerId"
+                    >{{ career.name }}</mat-option
+                  >
+                </mat-select>
+                <!-- Validation -->
+                <mat-error
+                  *ngIf="career.valid && (career.dirty || career.touched)"
+                  >Debe seleccionar una carrera</mat-error
+                >
+              </mat-form-field>
+            </div>
+          </div>
+          <!-- End Grid column -->
+
+          <!-- Start Grid column -->
+          <div class="col-md-12">
+            <!-- Material input -->
+            <div class="md-form form-group">
+              <input
+                formControlName="address"
+                mdbInput
+                mdbValidate
+                type="text"
+                class="form-control"
+                id="inputAddress"
+                placeholder="Departamento, estudio, o piso"
+              />
+              <label for="inputAddress2MD">Dirección</label>
+              <!-- Validation -->
+              <mdb-error
+                *ngIf="address.invalid && (address.dirty || address.touched)"
+                >Dirección requerida</mdb-error
+              >
+              <mdb-success
+                *ngIf="address.valid && (address.dirty || address.touched)"
+              ></mdb-success>
+            </div>
+          </div>
+          <!-- End Grid column -->
+        </div>
+        <!-- End Grid row -->
+
+        <!-- Start Grid row -->
+        <div class="form-row">
+          <!-- Start Grid column -->
+          <div class="col-md-12">
+            <!-- Material input -->
+            <div class="md-form form-group">
+              <input
+                formControlName="dni"
+                mdbInput
+                mdbValidate
+                type="number"
+                class="form-control"
+                id="inputDni"
+                placeholder="DNI"
+              />
+              <label for="inputCityMD">DNI</label>
+              <!-- Validation -->
+              <mdb-error *ngIf="dni.invalid && (dni.dirty || dni.touched)"
+                >DNI requerido</mdb-error
+              >
+              <mdb-success
+                *ngIf="dni.valid && (dni.dirty || dni.touched)"
+              ></mdb-success>
+            </div>
+          </div>
+          <!-- End Grid column -->
+        </div>
+        <!-- Grid row -->
+        <div style="text-align: center">
+          <div style="display: inline-block">
+            <!-- [disabled] = disable button until all validations are checked and is modified
+            logic = only false when both conditions are true, for every other convination
+            it will be !false then true (AND logic table inverted)-->
+            <button
+              type="submit"
+              [disabled]="!(studentForm.valid && studentForm.dirty)"
+              mdbBtn
+              color="primary"
+            >
+              Modificar
+            </button>
+          </div>
+        </div>
+      </form>
+      <!-- Extended material form grid -->
+    </div>
+  </div>
+</div>

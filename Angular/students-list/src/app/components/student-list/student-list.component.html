@@ -20,7 +20,7 @@
             <td [routerLink]="['/view', el.studentId]">{{ el.careerName }}</td>
             <td>
               <button
-                (click)="edit(el.studentId)"
+                [routerLink]="['/patch', el.studentId]"
                 type="button"
                 mdbBtn
                 color="green"

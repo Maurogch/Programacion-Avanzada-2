@@ -7,8 +7,15 @@ import { Student } from '../models/student';
 })
 export class StudentAsyncService {
   private apiURL = 'https://utn2019-avanzada2-tp8.herokuapp.com/api/students/';
+  httpOptions;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+  }
 
   getAll(): Promise<any> {
     return this.http.get(this.apiURL).toPromise();
@@ -19,16 +26,16 @@ export class StudentAsyncService {
   }
 
   add(student: any): Promise<any> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      })
-    };
-
-    return this.http.post(this.apiURL, student, httpOptions).toPromise();
+    return this.http.post(this.apiURL, student, this.httpOptions).toPromise();
   }
 
   delete(studentId: number): Promise<any> {
     return this.http.delete(this.apiURL + studentId).toPromise();
+  }
+
+  patch(studentId: number, values): Promise<any> {
+    return this.http
+      .patch(this.apiURL + studentId, values, this.httpOptions)
+      .toPromise();
   }
 }
