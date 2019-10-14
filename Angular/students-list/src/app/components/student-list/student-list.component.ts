@@ -45,9 +45,9 @@ export class StudentListComponent implements OnInit {
           if (el.careerId === null) {
             el.careerName = 'Sin carrera';
           } else {
-            result[1].forEach(carrer => {
-              if (el.careerId === carrer.careerId) {
-                el.careerName = carrer.name;
+            result[1].forEach(career => {
+              if (el.careerId === career.careerId) {
+                el.careerName = career.name;
               }
             });
           }
