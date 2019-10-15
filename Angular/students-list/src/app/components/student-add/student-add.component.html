@@ -109,7 +109,7 @@
             <div class="md-form form-group">
               <mat-form-field style="width:35vw">
                 <mat-label>Seleccione una Carrera</mat-label>
-                <mat-select formControlName="career">
+                <mat-select formControlName="careerId">
                   <mat-option
                     *ngFor="let career of careers"
                     [value]="career.careerId"
@@ -118,7 +118,7 @@
                 </mat-select>
                 <!-- Validation -->
                 <mat-error
-                  *ngIf="career.valid && (career.dirty || career.touched)"
+                  *ngIf="careerId.valid && (careerId.dirty || careerId.touched)"
                   >Debe seleccionar una carrera</mat-error
                 >
               </mat-form-field>

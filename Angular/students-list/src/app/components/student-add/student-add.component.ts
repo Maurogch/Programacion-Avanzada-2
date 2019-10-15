@@ -32,7 +32,7 @@ export class StudentAddComponent implements OnInit {
           updateOn: 'blur'
         }
       ],
-      career: ['', { validators: [Validators.required], updateOn: 'blur' }],
+      careerId: ['', { validators: [Validators.required], updateOn: 'blur' }],
       address: ['', { validators: [Validators.required], updateOn: 'blur' }],
       dni: ['', [Validators.required, Validators.minLength(6)]]
     });
@@ -59,8 +59,8 @@ export class StudentAddComponent implements OnInit {
   add() {
     // Transform data to a valid json request
     const request = Object.assign({}, this.studentForm.value); // Map form values to object
-    request['careerId'] = request.career; // create new key
-    delete request.career; // delete key
+    // request['careerId'] = request.career; // create new key
+    // delete request.career; // delete key
 
     this.studentAsyncService
       .add(request)
@@ -93,8 +93,8 @@ export class StudentAddComponent implements OnInit {
   get email() {
     return this.studentForm.get('email');
   }
-  get career() {
-    return this.studentForm.get('career');
+  get careerId() {
+    return this.studentForm.get('careerId');
   }
   get address() {
     return this.studentForm.get('address');
