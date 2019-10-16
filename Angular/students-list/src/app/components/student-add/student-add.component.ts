@@ -3,7 +3,8 @@ import { StudentAsyncService } from 'src/app/services/student-async.service';
 import { CareerAsyncService } from 'src/app/services/career-async.service';
 import { Student } from 'src/app/models/student';
 import { MatSnackBar } from '@angular/material';
-import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { FormGroup, Validators, FormBuilder, AbstractControl, ValidationErrors } from '@angular/forms';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-student-add',
@@ -28,7 +29,7 @@ export class StudentAddComponent implements OnInit {
         '',
         {
           validators: [Validators.required, Validators.email],
-          asyncValidators: [], // asyncValidationFunction()
+          asyncValidators: [this.validateEmail.bind(this)], // asyncValidationFunction()
           updateOn: 'blur'
         }
       ],
@@ -54,6 +55,26 @@ export class StudentAddComponent implements OnInit {
         );
         console.log(err);
       });
+  }
+
+  validateEmail(): Promise<ValidationErrors | null> {
+    const email = this.studentForm.get('email').value;
+
+    return new Promise((resolve, reject) => {
+      this.studentAsyncService.getAll().then((result) => {
+        result.forEach(student => {
+          if (student.email === email) {
+            resolve({
+              asyncInvalid: true // Name that is called for custom validator: formcontrolname.errors.asyncInvalid
+            });
+          }
+        });
+        resolve(null);
+      }).catch((err) => {
+        console.log(err);
+        reject('Error on getting email');
+      });
+    });
   }
 
   add() {

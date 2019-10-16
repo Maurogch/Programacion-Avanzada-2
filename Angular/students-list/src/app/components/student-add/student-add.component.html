@@ -96,6 +96,14 @@
                 "
                 >Email no válido</mdb-error
               >
+              <mdb-error
+                *ngIf="
+                  email.invalid &&
+                  (email.dirty || email.touched) &&
+                  email.errors.asyncInvalid
+                "
+                >Email ya existe</mdb-error
+              >
               <mdb-success
                 *ngIf="email.valid && (email.dirty || email.touched)"
               ></mdb-success>
