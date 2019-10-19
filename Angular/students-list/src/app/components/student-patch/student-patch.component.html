@@ -81,25 +81,10 @@
               />
               <label for="inputAddressMD">Email</label>
               <!-- Validation -->
-              <mdb-error
-                *ngIf="
-                  email.invalid &&
-                  (email.dirty || email.touched) &&
-                  email.errors.required
-                "
-                >Email requerido</mdb-error
-              >
-              <mdb-error
-                *ngIf="
-                  email.invalid &&
-                  (email.dirty || email.touched) &&
-                  email.errors.email
-                "
-                >Email no válido</mdb-error
-              >
-              <mdb-success
-                *ngIf="email.valid && (email.dirty || email.touched)"
-              ></mdb-success>
+              <mdb-error *ngIf="email.invalid && (email.dirty || email.touched)"
+                ><span *ngIf="!!email.errors.required">Email requerido</span>
+                <span *ngIf="!!email.errors.email">Email no válido</span>
+              </mdb-error>
             </div>
           </div>
           <!-- End Grid column -->
