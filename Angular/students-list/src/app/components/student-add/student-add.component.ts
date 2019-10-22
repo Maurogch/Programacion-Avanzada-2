@@ -3,7 +3,13 @@ import { StudentAsyncService } from 'src/app/services/student-async.service';
 import { CareerAsyncService } from 'src/app/services/career-async.service';
 import { Student } from 'src/app/models/student';
 import { MatSnackBar } from '@angular/material';
-import { FormGroup, Validators, FormBuilder, AbstractControl, ValidationErrors } from '@angular/forms';
+import {
+  FormGroup,
+  Validators,
+  FormBuilder,
+  AbstractControl,
+  ValidationErrors
+} from '@angular/forms';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -29,7 +35,7 @@ export class StudentAddComponent implements OnInit {
         '',
         {
           validators: [Validators.required, Validators.email],
-          asyncValidators: [this.validateEmail.bind(this)], // asyncValidationFunction()
+          asyncValidators: [this.validateDniEmail.bind(this)], // asyncValidationFunction()
           updateOn: 'blur'
         }
       ],
@@ -57,23 +63,26 @@ export class StudentAddComponent implements OnInit {
       });
   }
 
-  validateEmail(): Promise<ValidationErrors | null> {
-    const email = this.studentForm.get('email').value;
+  validateDniEmail(): Promise<ValidationErrors | null> {
+    // problem to check both at the same time
+    const email: string = this.studentForm.get('email').value;
+    const dni: string = this.studentForm.get('dni').value;
 
     return new Promise((resolve, reject) => {
-      this.studentAsyncService.getAll().then((result) => {
-        result.forEach(student => {
-          if (student.email === email) {
+      this.studentAsyncService
+        .checkDniEmail(dni, email)
+        .then(result => {
+          resolve(null);
+        })
+        .catch(err => {
+          if (err.status === 409) {
             resolve({
               asyncInvalid: true // Name that is called for custom validator: formcontrolname.errors.asyncInvalid
             });
           }
+          console.log(err);
+          reject('Error on getting email and dni');
         });
-        resolve(null);
-      }).catch((err) => {
-        console.log(err);
-        reject('Error on getting email');
-      });
     });
   }
 

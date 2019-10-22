@@ -38,4 +38,10 @@ export class StudentAsyncService {
       .patch(this.apiURL + studentId, values, this.httpOptions)
       .toPromise();
   }
+
+  checkDniEmail(dni: string, email: string): Promise<any> {
+    return this.http
+      .get(this.apiURL + '/identities?dni=' + dni + 'email=' + email)
+      .toPromise();
+  }
 }
