@@ -6,6 +6,8 @@ import {
   FormBuilder,
   ValidationErrors
 } from '@angular/forms';
+import { MatSnackBar } from '@angular/material';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +19,9 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private loginService: LoginService
+    private loginService: LoginService,
+    private snackBar: MatSnackBar,
+    private router: Router
   ) {
     this.loginForm = this.formBuilder.group({
       email: [
@@ -36,6 +40,20 @@ export class LoginComponent implements OnInit {
   login() {
     const request = Object.assign({}, this.loginForm.value);
     console.log(request);
+
+    this.loginService
+      .login(request)
+      .then(result => {
+        console.log(result);
+        // set token
+        this.router.navigateByUrl('/list');
+      })
+      .catch(err => {
+        this.snackBar.open('Usuario o contraseña inválidos', 'Cerrar', {
+          duration: 4000
+        });
+        console.log(err);
+      });
   }
 
   get email() {

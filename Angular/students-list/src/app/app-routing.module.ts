@@ -5,12 +5,15 @@ import { StudentViewComponent } from './components/student-view/student-view.com
 import { StudentListComponent } from './components/student-list/student-list.component';
 import { StudentPatchComponent } from './components/student-patch/student-patch.component';
 import { LoginComponent } from './components/login/login.component';
+import { RegisterComponent } from './components/register/register.component';
 
 const appRoutes: Routes = [
   { path: 'add', component: StudentAddComponent },
   { path: 'view/:id', component: StudentViewComponent },
   { path: 'patch/:id', component: StudentPatchComponent },
   { path: 'list', component: StudentListComponent },
+  { path: 'register', component: RegisterComponent },
+  { path: 'login', component: LoginComponent },
   { path: '', component: LoginComponent },
   { path: '**', redirectTo: '/list', pathMatch: 'full' }
 ];
