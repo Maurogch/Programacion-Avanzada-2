@@ -35,13 +35,17 @@ export class StudentAddComponent implements OnInit {
         '',
         {
           validators: [Validators.required, Validators.email],
-          asyncValidators: [this.validateDniEmail.bind(this)], // asyncValidationFunction()
+          asyncValidators: [this.validateEmail.bind(this)], // asyncValidationFunction()
           updateOn: 'blur'
         }
       ],
       careerId: ['', { validators: [Validators.required], updateOn: 'blur' }],
       address: ['', { validators: [Validators.required], updateOn: 'blur' }],
-      dni: ['', [Validators.required, Validators.minLength(6)]]
+      dni: [
+        '',
+        [Validators.required, Validators.minLength(6)],
+        [this.validateDni.bind(this)]
+      ]
     });
   }
 
@@ -63,25 +67,44 @@ export class StudentAddComponent implements OnInit {
       });
   }
 
-  validateDniEmail(): Promise<ValidationErrors | null> {
-    // problem to check both at the same time
+  validateEmail(): Promise<ValidationErrors | null> {
     const email: string = this.studentForm.get('email').value;
-    const dni: string = this.studentForm.get('dni').value;
 
     return new Promise((resolve, reject) => {
       this.studentAsyncService
-        .checkDniEmail(dni, email)
+        .checkEmail(email)
         .then(result => {
           resolve(null);
         })
         .catch(err => {
           if (err.status === 409) {
             resolve({
-              asyncInvalid: true // Name that is called for custom validator: formcontrolname.errors.asyncInvalid
+              emailExist: true // Name that is called for custom validator: formcontrolname.errors.asyncInvalid
             });
           }
           console.log(err);
-          reject('Error on getting email and dni');
+          reject('Error on getting email');
+        });
+    });
+  }
+
+  validateDni(): Promise<ValidationErrors | null> {
+    const dni: string = this.studentForm.get('dni').value;
+
+    return new Promise((resolve, reject) => {
+      this.studentAsyncService
+        .checkDni(dni)
+        .then(result => {
+          resolve(null);
+        })
+        .catch(err => {
+          if (err.status === 409) {
+            resolve({
+              dniExist: true // Name that is called for custom validator: formcontrolname.errors.asyncInvalid
+            });
+          }
+          console.log(err);
+          reject('Error on getting dni');
         });
     });
   }

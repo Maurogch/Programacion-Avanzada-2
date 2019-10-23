@@ -39,9 +39,13 @@ export class StudentAsyncService {
       .toPromise();
   }
 
-  checkDniEmail(dni: string, email: string): Promise<any> {
+  checkDni(dni: string): Promise<any> {
+    return this.http.get(this.apiURL + '/identities?dni=' + dni).toPromise();
+  }
+
+  checkEmail(email: string): Promise<any> {
     return this.http
-      .get(this.apiURL + '/identities?dni=' + dni + 'email=' + email)
+      .get(this.apiURL + '/identities?email=' + email)
       .toPromise();
   }
 }
