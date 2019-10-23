@@ -18,6 +18,7 @@ import { Router } from '@angular/router';
 })
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
+  user = { email: '', password: '' };
 
   constructor(
     private formBuilder: FormBuilder,
@@ -34,18 +35,29 @@ export class RegisterComponent implements OnInit {
           updateOn: 'blur'
         }
       ],
-      password: ['', [Validators.required, Validators.minLength(8)]]
+      password: ['', [Validators.required, Validators.minLength(8)]],
+      password2: [
+        '',
+        [Validators.required, Validators.minLength(8), this.passwordMatch]
+      ]
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.registerForm.get('email').valueChanges.subscribe(val => {
+      this.user.email = val;
+    });
+
+    this.registerForm.get('password').valueChanges.subscribe(val => {
+      this.user.password = val;
+    });
+  }
 
   onSubmit() {
-    const request = Object.assign({}, this.registerForm.value);
-    console.log(request);
+    console.log(this.user);
 
     this.loginService
-      .register(request)
+      .register(this.user)
       .then(result => {
         console.log('registerResult: ' + result);
         this.snackBar.open('Cuenta registrada exitosamente', 'Cerrar', {
@@ -67,6 +79,16 @@ export class RegisterComponent implements OnInit {
         );
         console.log(err);
       });
+  }
+
+  passwordMatch(): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      if (this.user.password !== this.registerForm.get('password2').value) {
+        return { passwordMatch: true };
+      } else {
+        return null;
+      }
+    };
   }
 
   validateUserEmail(): Promise<ValidationErrors | null> {

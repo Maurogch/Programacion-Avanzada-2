@@ -33,7 +33,7 @@
               </mdb-error>
             </div>
 
-            <!-- Password -->
+            <!-- Password1 -->
             <div class="md-form form-group">
               <input
                 formControlName="password"
@@ -53,6 +53,31 @@
                 "
                 >Password requerida</mdb-error
               >
+
+              <!-- Password2 -->
+              <div class="md-form form-group">
+                <input
+                  formControlName="password2"
+                  mdbInput
+                  mdbValidate
+                  type="password"
+                  id="defaultLoginFormPassword2"
+                  class="form-control mb-4"
+                  placeholder="Repeat Password"
+                />
+                <label for="defaultLoginFormPassword">Repeat Password</label>
+                <mdb-error
+                  *ngIf="
+                    password.invalid && (password.dirty || password.touched)
+                  "
+                  ><span *ngIf="!!password.errors.required"
+                    >Password requerida</span
+                  >
+                  <span *ngIf="!!password.errors.passwordMatch"
+                    >Password debe coincidir</span
+                  ></mdb-error
+                >
+              </div>
 
               <small
                 id="defaultRegisterFormPasswordHelpBlock"
