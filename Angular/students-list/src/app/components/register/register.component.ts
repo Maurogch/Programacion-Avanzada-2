@@ -19,6 +19,7 @@ import { Router } from '@angular/router';
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
   user = { email: '', password: '' };
+  password2: string;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -38,7 +39,7 @@ export class RegisterComponent implements OnInit {
       password: ['', [Validators.required, Validators.minLength(8)]],
       password2: [
         '',
-        [Validators.required, Validators.minLength(8), this.passwordMatch]
+        [Validators.required, Validators.minLength(8), this.passwordMatch()]
       ]
     });
   }
@@ -50,6 +51,10 @@ export class RegisterComponent implements OnInit {
 
     this.registerForm.get('password').valueChanges.subscribe(val => {
       this.user.password = val;
+    });
+
+    this.registerForm.get('password2').valueChanges.subscribe(val => {
+      this.password2 = val;
     });
   }
 
@@ -83,7 +88,7 @@ export class RegisterComponent implements OnInit {
 
   passwordMatch(): ValidatorFn {
     return (control: AbstractControl): { [key: string]: any } | null => {
-      if (this.user.password !== this.registerForm.get('password2').value) {
+      if (this.user.password !== this.password2) {
         return { passwordMatch: true };
       } else {
         return null;
