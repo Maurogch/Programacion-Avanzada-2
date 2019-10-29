@@ -4,6 +4,8 @@ import { Component, OnInit } from '@angular/core';
 import { StudentAsyncService } from 'src/app/services/student-async.service';
 import { CareerAsyncService } from 'src/app/services/career-async.service';
 import { MatSnackBar } from '@angular/material';
+import { forkJoin, Observable } from 'rxjs';
+import { Student } from 'src/app/models/student';
 
 @Component({
   selector: 'app-student-list',
@@ -11,7 +13,8 @@ import { MatSnackBar } from '@angular/material';
   styleUrls: ['./student-list.component.css']
 })
 export class StudentListComponent implements OnInit {
-  elements: any = [];
+  careers: Career[];
+  students: Student[];
 
   headElements = [
     'ID',
@@ -33,7 +36,7 @@ export class StudentListComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    Promise.all([
+    /*Promise.all([
       this.studentAsyncService.getAll(),
       this.careerAsyncService.getAll()
     ])
@@ -41,19 +44,7 @@ export class StudentListComponent implements OnInit {
         this.elements = result[0];
 
         // Map career name
-        this.elements.forEach(el => {
-          if (el.careerId === null) {
-            el.careerName = 'Sin carrera';
-          } else {
-            result[1].forEach(career => {
-              if (el.careerId === career.careerId) {
-                el.careerName = career.name;
-              }
-            });
-          }
-        });
 
-        this.loading = false;
       })
       .catch(err => {
         this.snackBar.open(
@@ -64,7 +55,39 @@ export class StudentListComponent implements OnInit {
           }
         );
         console.log(err);
+      });*/
+    this.loadData();
+
+    // this.studentAsyncService.getAll().subscribe(result => console.log(result));
+  }
+
+  loadData() {
+    this.loadStudentCarreers().subscribe(result => {
+      console.log(result);
+      this.students = result[0];
+      this.careers = result[1];
+
+      this.students.forEach(student => {
+        if (student.career.careerId === null) {
+          student.career.name = 'Sin carrera';
+        } else {
+          this.careers.forEach(career => {
+            if (student.career.careerId === career.careerId) {
+              student.career.name = career.name;
+            }
+          });
+        }
       });
+
+      this.loading = false;
+     });
+  }
+
+  loadStudentCarreers(): Observable<any> {
+    return forkJoin([
+      this.studentAsyncService.getAll(),
+      this.careerAsyncService.getAll()
+    ]);
   }
 
   delete(studentId: number) {
@@ -94,9 +117,9 @@ export class StudentListComponent implements OnInit {
     console.log(el);
   }
 
-  private arrayRemove(value) {
-    this.elements = this.elements.filter(function(ele) {
-      return ele.studentId !== value;
+  private arrayRemove(id: number) {
+    this.students = this.students.filter(student => {
+      return student.studentId !== id;
     });
   }
 }

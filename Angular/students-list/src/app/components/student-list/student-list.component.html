@@ -8,19 +8,19 @@
           </tr>
         </thead>
         <tbody>
-          <tr mdbTableCol *ngFor="let el of elements">
-            <th [routerLink]="['/view', el.studentId]" scope="row">
-              {{ el.studentId }}
+          <tr mdbTableCol *ngFor="let student of students">
+            <th [routerLink]="['/view', student.studentId]" scope="row">
+              {{ student.studentId }}
             </th>
-            <td [routerLink]="['/view', el.studentId]">{{ el.firstName }}</td>
-            <td [routerLink]="['/view', el.studentId]">{{ el.lastName }}</td>
-            <td [routerLink]="['/view', el.studentId]">{{ el.email }}</td>
-            <td [routerLink]="['/view', el.studentId]">{{ el.address }}</td>
-            <td [routerLink]="['/view', el.studentId]">{{ el.dni }}</td>
-            <td [routerLink]="['/view', el.studentId]">{{ el.careerName }}</td>
+            <td [routerLink]="['/view', student.studentId]">{{ student.firstName }}</td>
+            <td [routerLink]="['/view', student.studentId]">{{ student.lastName }}</td>
+            <td [routerLink]="['/view', student.studentId]">{{ student.email }}</td>
+            <td [routerLink]="['/view', student.studentId]">{{ student.address }}</td>
+            <td [routerLink]="['/view', student.studentId]">{{ student.dni }}</td>
+            <td [routerLink]="['/view', student.studentId]">{{ student.career.name }}</td>
             <td>
               <button
-                [routerLink]="['/patch', el.studentId]"
+                [routerLink]="['/patch', student.studentId]"
                 type="button"
                 mdbBtn
                 color="green"
@@ -33,7 +33,7 @@
             </td>
             <td>
               <button
-                (click)="delete(el.studentId)"
+                (click)="delete(student.studentId)"
                 type="button"
                 mdbBtn
                 color="green"
