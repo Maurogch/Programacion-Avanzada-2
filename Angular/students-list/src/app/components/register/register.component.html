@@ -68,12 +68,12 @@
                 <label for="defaultLoginFormPassword">Repeat Password</label>
                 <mdb-error
                   *ngIf="
-                    password.invalid && (password.dirty || password.touched)
+                    password2.invalid && (password2.dirty || password2.touched)
                   "
-                  ><span *ngIf="!!password.errors.required"
+                  ><span *ngIf="!!password2.errors.required"
                     >Password requerida</span
                   >
-                  <span *ngIf="!!password.errors.passwordMatch"
+                  <span *ngIf="!!password2.errors.passwordMatch"
                     >Password debe coincidir</span
                   ></mdb-error
                 >

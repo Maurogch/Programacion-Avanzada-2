@@ -19,7 +19,6 @@ import { Router } from '@angular/router';
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
   user = { email: '', password: '' };
-  password2: string;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -45,16 +44,16 @@ export class RegisterComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.setValues();
+  }
+
+  setValues() {
     this.registerForm.get('email').valueChanges.subscribe(val => {
       this.user.email = val;
     });
 
     this.registerForm.get('password').valueChanges.subscribe(val => {
       this.user.password = val;
-    });
-
-    this.registerForm.get('password2').valueChanges.subscribe(val => {
-      this.password2 = val;
     });
   }
 
@@ -88,7 +87,7 @@ export class RegisterComponent implements OnInit {
 
   passwordMatch(): ValidatorFn {
     return (control: AbstractControl): { [key: string]: any } | null => {
-      if (this.user.password !== this.password2) {
+      if (this.user.password !== control.value) { // get control value to compare
         return { passwordMatch: true };
       } else {
         return null;
@@ -123,5 +122,9 @@ export class RegisterComponent implements OnInit {
 
   get password() {
     return this.registerForm.get('password');
+  }
+
+  get password2() {
+    return this.registerForm.get('password2');
   }
 }
