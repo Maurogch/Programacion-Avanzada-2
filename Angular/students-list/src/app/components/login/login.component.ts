@@ -41,14 +41,14 @@ export class LoginComponent implements OnInit {
     const request = Object.assign({}, this.loginForm.value);
     console.log(request);
 
-    this.loginService
-      .login(request)
-      .then(result => {
+    this.loginService.login(request)
+      .subscribe(result => {
         console.log(result);
         // set token
+        this.loginService.token = result.jwt;
         this.router.navigateByUrl('/list');
-      })
-      .catch(err => {
+      },
+      err => {
         this.snackBar.open('Usuario o contraseña inválidos', 'Cerrar', {
           duration: 4000
         });

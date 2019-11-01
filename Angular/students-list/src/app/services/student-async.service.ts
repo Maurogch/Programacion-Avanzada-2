@@ -34,31 +34,40 @@ export class StudentAsyncService {
     );
   }
 
-  getById(studentId: number): Promise<any> {
-    return this.http.get(this.apiURL + studentId).toPromise();
+  getById(studentId: number): Observable<Student> {
+    return this.http.get(this.apiURL + studentId).pipe(
+      map((item: any) => new Student(
+        new Career(item.careerId),
+        item.studentId,
+        item.lastName,
+        item.firstName,
+        item.dni,
+        item.email,
+        item.address
+      ))
+    );
   }
 
-  add(student: any): Promise<any> {
-    return this.http.post(this.apiURL, student, this.httpOptions).toPromise();
+  add(student: any): Observable<any> {
+    return this.http.post(this.apiURL, student, this.httpOptions);
   }
 
-  delete(studentId: number): Promise<any> {
-    return this.http.delete(this.apiURL + studentId).toPromise();
+  delete(studentId: number): Observable<any> {
+    return this.http.delete(this.apiURL + studentId);
   }
 
-  patch(studentId: number, values): Promise<any> {
+  patch(studentId: number, values): Observable<any> {
     return this.http
-      .patch(this.apiURL + studentId, values, this.httpOptions)
-      .toPromise();
+      .patch(this.apiURL + studentId, values, this.httpOptions);
   }
 
   checkDni(dni: string): Promise<any> {
-    return this.http.get(this.apiURL + '/identities?dni=' + dni).toPromise();
+    return this.http.get(this.apiURL + 'identities?dni=' + dni).toPromise();
   }
 
   checkEmail(email: string): Promise<any> {
     return this.http
-      .get(this.apiURL + '/identities?email=' + email)
+      .get(this.apiURL + 'identities?email=' + email)
       .toPromise();
   }
 }

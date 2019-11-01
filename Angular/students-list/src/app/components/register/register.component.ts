@@ -59,10 +59,8 @@ export class RegisterComponent implements OnInit {
 
   onSubmit() {
     console.log(this.user);
-
-    this.loginService
-      .register(this.user)
-      .then(result => {
+    this.loginService.register(this.user).subscribe(
+      result => {
         console.log('registerResult: ' + result);
         this.snackBar.open('Cuenta registrada exitosamente', 'Cerrar', {
           duration: 4000
@@ -72,8 +70,8 @@ export class RegisterComponent implements OnInit {
         setTimeout(() => {
           this.router.navigateByUrl('/');
         }, 4000);
-      })
-      .catch(err => {
+      },
+      err => {
         this.snackBar.open(
           'Ops hubo un error registrarse, refresque la página',
           'Cerrar',
@@ -82,12 +80,14 @@ export class RegisterComponent implements OnInit {
           }
         );
         console.log(err);
-      });
+      }
+    );
   }
 
   passwordMatch(): ValidatorFn {
     return (control: AbstractControl): { [key: string]: any } | null => {
-      if (this.user.password !== control.value) { // get control value to compare
+      if (this.user.password !== control.value) {
+        // get control value to compare
         return { passwordMatch: true };
       } else {
         return null;

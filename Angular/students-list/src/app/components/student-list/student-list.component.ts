@@ -36,29 +36,7 @@ export class StudentListComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    /*Promise.all([
-      this.studentAsyncService.getAll(),
-      this.careerAsyncService.getAll()
-    ])
-      .then(result => {
-        this.elements = result[0];
-
-        // Map career name
-
-      })
-      .catch(err => {
-        this.snackBar.open(
-          'Ops hubo un error al cargar la lista de estudiantes, refresque la página',
-          'Cerrar',
-          {
-            duration: 4000
-          }
-        );
-        console.log(err);
-      });*/
     this.loadData();
-
-    // this.studentAsyncService.getAll().subscribe(result => console.log(result));
   }
 
   loadData() {
@@ -93,15 +71,15 @@ export class StudentListComponent implements OnInit {
   delete(studentId: number) {
     this.studentAsyncService
       .delete(studentId)
-      .then(result => {
+      .subscribe(result => {
         console.log(result);
         this.snackBar.open('Estudiante borrado con exito', 'Cerrar', {
           duration: 4000
         });
 
         this.arrayRemove(studentId);
-      })
-      .catch(err => {
+      }
+      , err => {
         console.log(err);
         this.snackBar.open(
           'Ops hubo un error borrar el estudiante, refresque la página e intente de nuevo',

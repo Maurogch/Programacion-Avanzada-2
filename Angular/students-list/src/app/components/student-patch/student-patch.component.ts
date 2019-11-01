@@ -7,6 +7,7 @@ import { MatSnackBar } from '@angular/material';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
+import { Observable, forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-student-patch',
@@ -15,7 +16,7 @@ import { Router } from '@angular/router';
 })
 export class StudentPatchComponent implements OnInit {
   student: Student = new Student();
-  careers: Array<any> = [];
+  careers: Career[];
   loader = true;
   studentForm: FormGroup;
 
@@ -45,46 +46,40 @@ export class StudentPatchComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.loadStudentCarreers().subscribe(result => {
+      console.log(result[0]);
+      this.student = result[0];
+      this.careers = result[1];
+
+      this.careers.forEach(career => {
+        if (career.careerId === this.student.career.careerId) {
+          this.student.career.name = career.name;
+        }
+      });
+
+      this.mapInputs();
+      this.loader = false;
+    },
+    err => {
+      this.snackBar.open(
+        'Ops hubo un error al cargar el estudiante, refresque la página',
+        'Cerrar',
+        {
+          duration: 4000
+        }
+      );
+      console.log(err);
+    });
+  }
+
+  loadStudentCarreers(): Observable<any> {
     // Get id from route
     const studentId = Number(this.route.snapshot.paramMap.get('id'));
 
-    Promise.all([
+    return forkJoin([
       this.studentAsyncService.getById(studentId),
       this.careerAsyncService.getAll()
-    ])
-      .then(result => {
-        const resStudent = result[0];
-        this.careers = result[1];
-
-        this.student = new Student(
-          new Career(resStudent.careerId),
-          resStudent.studentId,
-          resStudent.lastName,
-          resStudent.firstName,
-          resStudent.dni,
-          resStudent.email,
-          resStudent.address
-        );
-
-        this.careers.forEach(element => {
-          if (element.careerId === this.student.career.careerId) {
-            this.student.career.name = element.name;
-          }
-        });
-
-        this.mapInputs();
-        this.loader = false;
-      })
-      .catch(err => {
-        this.snackBar.open(
-          'Ops hubo un error al cargar el estudiante, refresque la página',
-          'Cerrar',
-          {
-            duration: 4000
-          }
-        );
-        console.log(err);
-      });
+    ]);
   }
 
   private mapInputs() {
@@ -102,7 +97,7 @@ export class StudentPatchComponent implements OnInit {
     const values = Object.assign({}, this.studentForm.value); // Map form values to object
     const jsonObject = {};
 
-    // Crease object with only modified values
+    // Create object with only modified values
     if (this.studentForm.get('firstName').dirty) {
       jsonObject['firstName'] = values.firstName;
     }
@@ -123,8 +118,7 @@ export class StudentPatchComponent implements OnInit {
     }
 
     this.studentAsyncService
-      .patch(this.student.studentId, jsonObject)
-      .then(result => {
+      .patch(this.student.studentId, jsonObject).subscribe(result => {
         this.snackBar.open(
           'Alumno modificado exitosamente, redirigiendo a la lista',
           'Cerrar',
@@ -135,10 +129,10 @@ export class StudentPatchComponent implements OnInit {
 
         // Redirect to home after 4 seconds
         setTimeout(() => {
-          this.router.navigateByUrl('/');
+          this.router.navigateByUrl('/list');
         }, 4000);
-      })
-      .catch(err => {
+      },
+      err => {
         this.snackBar.open(
           'Ops hubo un error al modificar el alumno, intente de nuevo',
           'Cerrar',
