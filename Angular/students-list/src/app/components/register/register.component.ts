@@ -44,6 +44,10 @@ export class RegisterComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (typeof this.loginService.token !== 'undefined') {
+      this.router.navigateByUrl('/list');
+    }
+
     this.setValues();
   }
 

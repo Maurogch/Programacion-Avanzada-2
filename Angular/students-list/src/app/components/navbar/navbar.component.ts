@@ -1,3 +1,4 @@
+import { LoginService } from './../../services/login.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -6,10 +7,18 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
+  logged = false;
 
-  constructor() { }
+  constructor(private loginService: LoginService) { }
 
   ngOnInit() {
+    if (typeof this.loginService.token !== 'undefined') {
+      this.logged = true;
+    }
+  }
+
+  toogleLogged() {
+    this.logged = !this.logged;
   }
 
 }

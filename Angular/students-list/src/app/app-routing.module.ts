@@ -6,16 +6,19 @@ import { StudentListComponent } from './components/student-list/student-list.com
 import { StudentPatchComponent } from './components/student-patch/student-patch.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
+import { AuthGuard } from './auth/auth.guard';
+import { LogoutComponent } from './components/logout/logout.component';
 
 const appRoutes: Routes = [
-  { path: 'add', component: StudentAddComponent },
-  { path: 'view/:id', component: StudentViewComponent },
-  { path: 'patch/:id', component: StudentPatchComponent },
-  { path: 'list', component: StudentListComponent },
+  { path: 'add', component: StudentAddComponent, canActivate: [AuthGuard] },
+  { path: 'view/:id', component: StudentViewComponent, canActivate: [AuthGuard] },
+  { path: 'patch/:id', component: StudentPatchComponent, canActivate: [AuthGuard] },
+  { path: 'list', component: StudentListComponent, canActivate: [AuthGuard] },
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'logout', component: LogoutComponent },
   { path: '', component: LoginComponent },
-  { path: '**', redirectTo: '/list', pathMatch: 'full' }
+  { path: '**', redirectTo: '/list', pathMatch: 'full', canActivate: [AuthGuard] }
 ];
 
 @NgModule({

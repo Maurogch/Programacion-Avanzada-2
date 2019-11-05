@@ -1,5 +1,5 @@
 import { LoginService } from './../../services/login.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
 import {
   FormGroup,
   Validators,
@@ -16,6 +16,7 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
+  @Output 
 
   constructor(
     private formBuilder: FormBuilder,
@@ -35,7 +36,11 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    if (typeof this.loginService.token !== 'undefined') {
+      this.router.navigateByUrl('/list');
+    }
+  }
 
   login() {
     const request = Object.assign({}, this.loginForm.value);

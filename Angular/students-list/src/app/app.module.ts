@@ -19,6 +19,7 @@ import { StudentPatchComponent } from './components/student-patch/student-patch.
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { LogoutComponent } from './components/logout/logout.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { NavbarComponent } from './components/navbar/navbar.component';
     StudentPatchComponent,
     LoginComponent,
     RegisterComponent,
-    NavbarComponent
+    NavbarComponent,
+    LogoutComponent
   ],
   imports: [
     BrowserModule,

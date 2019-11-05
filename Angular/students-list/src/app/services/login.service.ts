@@ -1,6 +1,7 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Output } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { EventEmitter } from 'events';
 
 @Injectable({
   providedIn: 'root'
@@ -11,8 +12,9 @@ export class LoginService {
   private registerPath = 'sign-up';
   private identitiesPath = 'users/identities';
 
-  httpOptions;
+  httpOptions: {};
   token: string;
+  redirectUrl: string;
 
   constructor(private http: HttpClient) {
     this.httpOptions = {
@@ -35,5 +37,9 @@ export class LoginService {
   validateEmail(email: string): Promise<any> {
     return this.http
       .get(this.apiURL + this.identitiesPath + '?email=' + email).toPromise();
+  }
+
+  logout(): void {
+    this.token = undefined;
   }
 }
