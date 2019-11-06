@@ -12,7 +12,7 @@ export class NavbarComponent implements OnInit {
   constructor(private loginService: LoginService) { }
 
   ngOnInit() {
-    if (typeof this.loginService.token !== 'undefined') {
+    if (localStorage.getItem('token')) {
       this.logged = true;
     }
   }

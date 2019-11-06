@@ -13,7 +13,6 @@ export class LoginService {
   private identitiesPath = 'users/identities';
 
   httpOptions: {};
-  token: string;
   redirectUrl: string;
 
   constructor(private http: HttpClient) {
@@ -40,6 +39,6 @@ export class LoginService {
   }
 
   logout(): void {
-    this.token = undefined;
+    localStorage.setItem('token', undefined);
   }
 }

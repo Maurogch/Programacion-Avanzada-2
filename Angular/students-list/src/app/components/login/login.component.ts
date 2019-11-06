@@ -16,7 +16,6 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
-  @Output 
 
   constructor(
     private formBuilder: FormBuilder,
@@ -37,7 +36,9 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (typeof this.loginService.token !== 'undefined') {
+    // Check if there is a token in local storage
+    if (localStorage.getItem('token')) {
+      // If there is a token don't let user enter login again, redirect to list
       this.router.navigateByUrl('/list');
     }
   }
@@ -50,7 +51,7 @@ export class LoginComponent implements OnInit {
       .subscribe(result => {
         console.log(result);
         // set token
-        this.loginService.token = result.jwt;
+        localStorage.setItem('token', result.jwt);
         this.router.navigateByUrl('/list');
       },
       err => {

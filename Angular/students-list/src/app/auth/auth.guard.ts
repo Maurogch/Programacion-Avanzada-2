@@ -17,9 +17,10 @@ export class AuthGuard implements CanActivate {
     }
 
     checkLogin(url: string): boolean {
-      console.log('AuthGuard token: ' + this.loginService.token);
+      const token = localStorage.getItem('token');
+      console.log('AuthGuard token: ' + token);
 
-      if (typeof this.loginService.token !== 'undefined') { return true; }
+      if (token) { return true; }
 
       // Store the attempted URL for redirecting
       this.loginService.redirectUrl = url;
