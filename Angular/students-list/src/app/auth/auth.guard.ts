@@ -1,6 +1,11 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import {
+  CanActivate,
+  ActivatedRouteSnapshot,
+  RouterStateSnapshot,
+  UrlTree,
+  Router
+} from '@angular/router';
 import { LoginService } from '../services/login.service';
 
 @Injectable({
@@ -11,24 +16,25 @@ export class AuthGuard implements CanActivate {
 
   canActivate(
     next: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): boolean {
-      const url: string = state.url;
-      return this.checkLogin(url);
+    state: RouterStateSnapshot
+  ): boolean {
+    const url: string = state.url;
+    return this.checkLogin(url);
+  }
+
+  checkLogin(url: string): boolean {
+    const token = this.loginService.getToken;
+    console.log('AuthGuard token: ' + token);
+
+    if (token) {
+      return true;
     }
 
-    checkLogin(url: string): boolean {
-      const token = localStorage.getItem('token');
-      console.log('AuthGuard token: ' + token);
+    // Store the attempted URL for redirecting
+    this.loginService.redirectUrl = url;
 
-      if (token) { return true; }
-
-      // Store the attempted URL for redirecting
-      this.loginService.redirectUrl = url;
-
-      // Navigate to the login page with extras
-      this.router.navigate(['/login']);
-      return false;
-    }
+    // Navigate to the login page with extras
+    this.router.navigate(['/login']);
+    return false;
+  }
 }
-
-

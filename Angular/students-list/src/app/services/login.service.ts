@@ -1,6 +1,6 @@
 import { Injectable, Output } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { EventEmitter } from 'events';
 
 @Injectable({
@@ -14,6 +14,7 @@ export class LoginService {
 
   httpOptions: {};
   redirectUrl: string;
+  tokenValue = new Subject();
 
   constructor(private http: HttpClient) {
     this.httpOptions = {
@@ -23,22 +24,35 @@ export class LoginService {
     };
   }
 
+  set setToken(token) {
+    this.tokenValue.next(token); // this will make sure to tell every subscriber about the change.
+    localStorage.setItem('token', token);
+  }
+
+  get getToken() {
+    return localStorage.getItem('token');
+  }
+
   login(user: any): Observable<any> {
-    return this.http
-      .post(this.apiURL + this.loginPath, user, this.httpOptions);
+    return this.http.post(this.apiURL + this.loginPath, user, this.httpOptions);
   }
 
   register(user: any): Observable<any> {
-    return this.http
-      .post(this.apiURL + this.registerPath, user, this.httpOptions);
+    return this.http.post(
+      this.apiURL + this.registerPath,
+      user,
+      this.httpOptions
+    );
   }
 
   validateEmail(email: string): Promise<any> {
     return this.http
-      .get(this.apiURL + this.identitiesPath + '?email=' + email).toPromise();
+      .get(this.apiURL + this.identitiesPath + '?email=' + email)
+      .toPromise();
   }
 
   logout(): void {
     localStorage.removeItem('token');
+    this.tokenValue.next();
   }
 }
