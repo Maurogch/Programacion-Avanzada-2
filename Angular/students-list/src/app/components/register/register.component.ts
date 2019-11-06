@@ -44,7 +44,10 @@ export class RegisterComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (typeof this.loginService.token !== 'undefined') {
+    const token = localStorage.getItem('token');
+    // Check if there is a token in local storage
+    if (token !== null) {
+      // If there is a token don't let user enter login again, redirect to list
       this.router.navigateByUrl('/list');
     }
 

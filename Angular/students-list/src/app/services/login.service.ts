@@ -39,6 +39,6 @@ export class LoginService {
   }
 
   logout(): void {
-    localStorage.setItem('token', undefined);
+    localStorage.removeItem('token');
   }
 }

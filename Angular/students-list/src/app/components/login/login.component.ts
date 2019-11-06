@@ -8,6 +8,7 @@ import {
 } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
+import { GlobalService } from 'src/app/services/global.service';
 
 @Component({
   selector: 'app-login',
@@ -20,6 +21,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private loginService: LoginService,
+    private globalService: GlobalService,
     private snackBar: MatSnackBar,
     private router: Router
   ) {
@@ -36,8 +38,9 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
+    const token = localStorage.getItem('token');
     // Check if there is a token in local storage
-    if (localStorage.getItem('token')) {
+    if (token !== null) {
       // If there is a token don't let user enter login again, redirect to list
       this.router.navigateByUrl('/list');
     }
@@ -51,7 +54,8 @@ export class LoginComponent implements OnInit {
       .subscribe(result => {
         console.log(result);
         // set token
-        localStorage.setItem('token', result.jwt);
+        this.globalService.setToken = result.jwt;
+       // localStorage.setItem('token', result.jwt);
         this.router.navigateByUrl('/list');
       },
       err => {
