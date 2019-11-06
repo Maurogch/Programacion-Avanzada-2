@@ -22,7 +22,7 @@ export class StudentAddComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.careerAsyncService
+    /*this.careerAsyncService
       .getAll()
       .then(result => {
         this.careers = result;
@@ -36,7 +36,7 @@ export class StudentAddComponent implements OnInit {
           }
         );
         console.log(err);
-      });
+      });*/
   }
 
   add(form: NgForm) {
