@@ -1,0 +1,130 @@
+<div class="container">
+  <div class="row d-flex justify-content-center">
+    <div class="col-md-6 mt-5">
+      <mdb-card>
+        <mdb-card-body>
+          <!-- Default form register -->
+          <form
+            [formGroup]="registerForm"
+            (ngSubmit)="onSubmit()"
+            class="text-center border border-light p-5"
+          >
+            <p class="h4 mb-4">Sign up</p>
+
+            <!-- E-mail -->
+            <div class="md-form form-group">
+              <input
+                formControlName="email"
+                mdbInput
+                mdbValidate
+                type="email"
+                id="defaultLoginFormEmail"
+                class="form-control mb-4"
+                placeholder="email@servidor.com"
+              />
+              <label for="defaultLoginFormEmail">Email</label>
+              <mdb-error *ngIf="email.invalid && (email.dirty || email.touched)"
+                ><span *ngIf="!!email.errors.required">Email requerido</span>
+                <span *ngIf="!!email.errors.email">Email no válido</span>
+                <span *ngIf="!!email.errors.email">Email no válido</span>
+                <span *ngIf="!!email.errors.asyncInvalid"
+                  >Email no disponible</span
+                >
+              </mdb-error>
+            </div>
+
+            <!-- Password1 -->
+            <div class="md-form form-group">
+              <input
+                formControlName="password"
+                mdbInput
+                mdbValidate
+                type="password"
+                id="defaultLoginFormPassword"
+                class="form-control mb-4"
+                placeholder="Password"
+              />
+              <label for="defaultLoginFormPassword">Password</label>
+              <mdb-error
+                *ngIf="
+                  password.invalid &&
+                  (password.dirty || password.touched) &&
+                  !!password.errors.required
+                "
+                >Password requerida</mdb-error
+              >
+
+              <!-- Password2 -->
+              <div class="md-form form-group">
+                <input
+                  formControlName="password2"
+                  mdbInput
+                  mdbValidate
+                  type="password"
+                  id="defaultLoginFormPassword2"
+                  class="form-control mb-4"
+                  placeholder="Repeat Password"
+                />
+                <label for="defaultLoginFormPassword">Repeat Password</label>
+                <mdb-error
+                  *ngIf="
+                    password2.invalid && (password2.dirty || password2.touched)
+                  "
+                  ><span *ngIf="!!password2.errors.required"
+                    >Password requerida</span
+                  >
+                  <span *ngIf="!!password2.errors.passwordMatch"
+                    >Password debe coincidir</span
+                  ></mdb-error
+                >
+              </div>
+
+              <small
+                id="defaultRegisterFormPasswordHelpBlock"
+                class="form-text text-muted mb-4"
+              >
+                At least 8 characters and 1 digit
+              </small>
+            </div>
+            <!-- Sign up button -->
+            <button
+              mdbBtn
+              [disabled]="!registerForm.valid"
+              color="info"
+              block="true"
+              class="my-4"
+              type="submit"
+            >
+              Sign in
+            </button>
+
+            <!-- Social register -->
+            <p>or sign up with:</p>
+
+            <a type="button" class="light-blue-text mx-2">
+              <mdb-icon fab icon="facebook"></mdb-icon>
+            </a>
+            <a type="button" class="light-blue-text mx-2">
+              <mdb-icon fab icon="twitter"></mdb-icon>
+            </a>
+            <a type="button" class="light-blue-text mx-2">
+              <mdb-icon fab icon="linkedin"></mdb-icon>
+            </a>
+            <a type="button" class="light-blue-text mx-2">
+              <mdb-icon fab icon="github"></mdb-icon>
+            </a>
+
+            <hr />
+
+            <!-- Terms of service -->
+            <p>
+              By clicking <em>Sign up</em> you agree to our
+              <a href="" target="_blank">terms of service</a>
+            </p>
+          </form>
+          <!-- Default form register -->
+        </mdb-card-body>
+      </mdb-card>
+    </div>
+  </div>
+</div>
