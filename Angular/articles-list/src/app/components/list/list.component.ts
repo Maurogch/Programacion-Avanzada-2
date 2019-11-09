@@ -6,6 +6,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./list.component.scss']
 })
 export class ListComponent implements OnInit {
+  headElements = [
+    'ID',
+    'Nombre',
+    'Descripción'
+  ];
+  loading = true;
 
   constructor() { }
 

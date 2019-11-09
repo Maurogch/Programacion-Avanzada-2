@@ -1,1 +1,32 @@
-<p>list works!</p>
+<div class="container" id="card">
+  <div class="row">
+    <div class="col-md-12" style="padding-top: 2em">
+      <table mdbTable>
+        <thead class="black white-text">
+          <tr>
+            <th *ngFor="let head of headElements" scope="col">
+              {{ head }}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr mdbTableCol>
+            <td>test1</td>
+            <td>test2</td>
+            <td>test3</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="d-flex justify-content-center" *ngIf="loading">
+        <div class="spinner-border text-primary" role="status">
+          <span class="sr-only">Cargando...</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12" style="padding-top: 1em">
+      <app-paginator></app-paginator>
+    </div>
+  </div>
+</div>

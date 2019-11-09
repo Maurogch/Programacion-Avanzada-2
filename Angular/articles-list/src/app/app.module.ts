@@ -20,6 +20,8 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { LogoutComponent } from './components/logout/logout.component';
 import { LoginComponent } from './components/login/login.component';
 import { ListComponent } from './components/list/list.component';
+import { ListItemComponent } from './components/list-item/list-item.component';
+import { PaginatorComponent } from './components/paginator/paginator.component';
 
 
 @NgModule({
@@ -29,7 +31,9 @@ import { ListComponent } from './components/list/list.component';
     NavbarComponent,
     LogoutComponent,
     LoginComponent,
-    ListComponent
+    ListComponent,
+    ListItemComponent,
+    PaginatorComponent
   ],
   imports: [
     BrowserModule,
