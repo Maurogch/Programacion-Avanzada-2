@@ -11,7 +11,7 @@ export class ListComponent implements OnInit {
   headElements = ['ID', 'Nombre', 'Descripción'];
   loading = true;
   products = [];
-  page = 0; // value comes from paginator
+  page = 1; // value comes from paginator
   size = 10; // value comes from paginator
   private totalPages: Subject<number> = new Subject<number>();
 
@@ -22,7 +22,8 @@ export class ListComponent implements OnInit {
   }
 
   loadTable(page: number, size: number) {
-    this.productService.getByPageSize(page, size).subscribe(
+    console.log('laod table page: ' + page);
+    this.productService.getByPageSize(page - 1, size).subscribe(
       data => {
         this.products = data.items;
         this.loading = false;
