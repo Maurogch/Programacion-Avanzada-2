@@ -1,7 +1,12 @@
 <nav aria-label="Articles navigation">
   <ul class="pagination pg-blue justify-content-center">
-    <li class="page-item disabled">
-      <a class="page-link" tabindex="-1" mdbWavesEffect>Previous</a>
+    <li class="page-item" [ngClass]="{ disabled: activePage === 1 }">
+      <a class="page-link" (click)="selectPage(1)" mdbWavesEffect>Primero</a>
+    </li>
+    <li class="page-item" [ngClass]="{ disabled: activePage === 1 }">
+      <a class="page-link" (click)="selectPage(activePage - 1)" mdbWavesEffect
+        >Anterior</a
+      >
       <!-- tabindex="-1" to diable prev-->
     </li>
     <li
@@ -14,14 +19,15 @@
         pageNumber
       }}</a>
     </li>
-    <!--<li class="page-item active">
-      <a class="page-link" mdbWavesEffect
-        >2 <span class="sr-only">(current)</span></a
+    <li class="page-item" [ngClass]="{ disabled: activePage === totalPages }">
+      <a class="page-link" (click)="selectPage(activePage + 1)" mdbWavesEffect
+        >Siguiente</a
       >
     </li>
-    <li class="page-item"><a class="page-link" mdbWavesEffect>3</a></li>-->
-    <li class="page-item">
-      <a class="page-link" mdbWavesEffect>Next</a>
+    <li class="page-item" [ngClass]="{ disabled: activePage === totalPages }">
+      <a class="page-link" (click)="selectPage(totalPages)" mdbWavesEffect
+        >Último</a
+      >
     </li>
   </ul>
 </nav>

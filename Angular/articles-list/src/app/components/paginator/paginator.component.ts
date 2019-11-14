@@ -35,6 +35,7 @@ export class PaginatorComponent implements OnInit, OnDestroy {
   }
 
   selectPage(pageNumber: number) {
+    console.log(pageNumber);
     this.activePage = pageNumber;
     this.selectedPageEvent.emit(pageNumber);
   }
