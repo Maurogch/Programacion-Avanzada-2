@@ -27,7 +27,7 @@
   <div class="row">
     <div class="col-md-12" style="padding-top: 1em">
       <app-paginator
-        [totalPagesObservable]="totalPages.asObservable()"
+        [totalPagesObservable]="totalItems.asObservable()"
         (selectedPageEvent)="pageChange($event)"
         (numberOfRowsEvent)="setRows($event)"
       ></app-paginator>

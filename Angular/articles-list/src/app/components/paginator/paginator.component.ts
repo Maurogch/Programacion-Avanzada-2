@@ -23,6 +23,7 @@ export class PaginatorComponent implements OnInit, OnDestroy {
 
   activePage = 1;
   totalPages = 0;
+  totalItems = 0;
   totalPagesArray = [];
   numberOfRows = 10; // number of items to show on list
 
@@ -30,21 +31,29 @@ export class PaginatorComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.totalPagesSubscription = this.totalPagesObservable.subscribe(
-      totPages => {
-        this.totalPages = totPages;
-        this.setNumberOfPages(totPages);
+      totItems => {
+        this.totalItems = totItems;
+        this.totalPages = Math.ceil(totItems / this.numberOfRows);
+        this.setNumberOfPages(this.totalPages);
       }
     );
   }
 
-  setRows(rows: number) {
+  setRows(rows) {
+    // Convert to int otherwise the conditions in setNumberOfPages will be
+    // broken as it will try to concatenate strings instead of doing math
+    rows = parseInt(rows, 10);
+
+    // If active page is greater than new max pages, go to last new page
+    if (this.activePage > Math.ceil(this.totalItems / rows)) {
+      this.selectPage(Math.ceil(this.totalItems / rows));
+    }
+
     this.numberOfRows = rows;
     this.numberOfRowsEvent.emit(rows);
-    console.log(rows);
   }
 
   selectPage(pageNumber: number) {
-    console.log(pageNumber);
     this.activePage = pageNumber;
     this.selectedPageEvent.emit(pageNumber);
   }

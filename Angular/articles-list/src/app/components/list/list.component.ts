@@ -13,7 +13,7 @@ export class ListComponent implements OnInit {
   products = [];
   page = 1; // value comes from paginator
   size = 10; // value comes from paginator
-  private totalPages: Subject<number> = new Subject<number>();
+  private totalItems: Subject<number> = new Subject<number>();
 
   constructor(private productService: ProductService) {}
 
@@ -22,12 +22,12 @@ export class ListComponent implements OnInit {
   }
 
   loadTable(page: number, size: number) {
-    console.log('laod table page: ' + page);
     this.productService.getByPageSize(page - 1, size).subscribe(
       data => {
         this.products = data.items;
         this.loading = false;
-        this.totalPages.next(data.total / this.size);
+        // this.totalPages.next(Math.ceil(data.total / this.size));
+        this.totalItems.next(data.total);
       },
       err => {
         console.log(err);
