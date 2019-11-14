@@ -29,5 +29,19 @@
         >Último</a
       >
     </li>
+    <li>
+      <select
+        class="browser-default custom-select"
+        (change)="setRows($event.target.value)"
+        style="background-color:rgba(255,255,255,0.3);;"
+      >
+        <option selected disabled>Filas</option>
+        <option value="10">10</option>
+        <option value="20">20</option>
+        <option value="30">30</option>
+        <option value="40">40</option>
+        <option value="50">50</option>
+      </select>
+    </li>
   </ul>
 </nav>

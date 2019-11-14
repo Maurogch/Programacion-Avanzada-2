@@ -29,6 +29,7 @@
       <app-paginator
         [totalPagesObservable]="totalPages.asObservable()"
         (selectedPageEvent)="pageChange($event)"
+        (numberOfRowsEvent)="setRows($event)"
       ></app-paginator>
     </div>
   </div>

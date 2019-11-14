@@ -39,4 +39,9 @@ export class ListComponent implements OnInit {
     this.page = pageNumber;
     this.loadTable(this.page, this.size);
   }
+
+  setRows(size: number) {
+    this.size = size;
+    this.loadTable(this.page, this.size);
+  }
 }

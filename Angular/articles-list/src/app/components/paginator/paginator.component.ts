@@ -18,10 +18,13 @@ export class PaginatorComponent implements OnInit, OnDestroy {
   @Input() totalPagesObservable: Observable<number>;
   @Output()
   selectedPageEvent = new EventEmitter<number>();
+  @Output()
+  numberOfRowsEvent = new EventEmitter<number>();
+
   activePage = 1;
   totalPages = 0;
   totalPagesArray = [];
-  numberOfItems = 10; // number of items to show on list
+  numberOfRows = 10; // number of items to show on list
 
   constructor() {}
 
@@ -32,6 +35,12 @@ export class PaginatorComponent implements OnInit, OnDestroy {
         this.setNumberOfPages(totPages);
       }
     );
+  }
+
+  setRows(rows: number) {
+    this.numberOfRows = rows;
+    this.numberOfRowsEvent.emit(rows);
+    console.log(rows);
   }
 
   selectPage(pageNumber: number) {
@@ -48,7 +57,7 @@ export class PaginatorComponent implements OnInit, OnDestroy {
       for (let i = 1; i <= totPages && i <= 10; i++) {
         this.totalPagesArray.push(i);
       }
-    } else if (this.activePage + this.numberOfItems > totPages) {
+    } else if (this.activePage + this.numberOfRows > totPages) {
       // If at end of items, make pages fixed at end
       for (let i = totPages - 9; i <= totPages; i++) {
         // If less than 10 pages limit lenght
