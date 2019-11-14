@@ -1,6 +1,13 @@
+import { LoginService } from 'src/app/services/login.service';
 import { Injectable } from '@angular/core';
-import { HttpInterceptor, HttpHandler, HttpEvent, HttpRequest, HttpErrorResponse } from '@angular/common/http';
-import { Observable, throwError, } from 'rxjs';
+import {
+  HttpInterceptor,
+  HttpHandler,
+  HttpEvent,
+  HttpRequest,
+  HttpErrorResponse
+} from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
@@ -8,10 +15,12 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class AuthInterceptorService implements HttpInterceptor {
+  constructor(private router: Router, private loginService: LoginService) {}
 
-  constructor(private router: Router) { }
-
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+  intercept(
+    req: HttpRequest<any>,
+    next: HttpHandler
+  ): Observable<HttpEvent<any>> {
     const token = localStorage.getItem('token');
 
     let request = req;
@@ -19,21 +28,22 @@ export class AuthInterceptorService implements HttpInterceptor {
     if (token) {
       request = req.clone({
         setHeaders: {
-          authorization: `Bearer ${ token }`
+          authorization: `Bearer ${token}`
         }
       });
     }
 
     return next.handle(request).pipe(
       catchError((err: HttpErrorResponse) => {
-
         if (err.status === 401) {
+          // Remove token from storage if there was one (another app token, or expired one)
+          localStorage.logout();
+
           this.router.navigateByUrl('/login');
         }
 
-        return throwError( err );
+        return throwError(err);
       })
     );
   }
 }
-

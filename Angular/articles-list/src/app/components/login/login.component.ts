@@ -1,10 +1,6 @@
 import { LoginService } from './../../services/login.service';
 import { Component, OnInit } from '@angular/core';
-import {
-  FormGroup,
-  Validators,
-  FormBuilder
-} from '@angular/forms';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
 
@@ -39,6 +35,7 @@ export class LoginComponent implements OnInit {
     // Check if there is a token in local storage
     if (token !== null) {
       // If there is a token don't let user enter login again, redirect to list
+      console.log('token in login component: ' + token);
       this.router.navigateByUrl('/list');
     }
   }
