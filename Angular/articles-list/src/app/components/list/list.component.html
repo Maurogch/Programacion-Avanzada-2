@@ -26,7 +26,9 @@
   </div>
   <div class="row">
     <div class="col-md-12" style="padding-top: 1em">
-      <app-paginator [totalPages]="totalPages"></app-paginator>
+      <app-paginator
+        [totalPagesObservable]="totalPages.asObservable()"
+      ></app-paginator>
     </div>
   </div>
 </div>

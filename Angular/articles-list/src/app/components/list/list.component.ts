@@ -1,18 +1,19 @@
-import { ProductService } from "./../../services/product.service";
-import { Component, OnInit } from "@angular/core";
+import { ProductService } from './../../services/product.service';
+import { Component, OnInit } from '@angular/core';
+import { Subject } from 'rxjs';
 
 @Component({
-  selector: "app-list",
-  templateUrl: "./list.component.html",
-  styleUrls: ["./list.component.scss"]
+  selector: 'app-list',
+  templateUrl: './list.component.html',
+  styleUrls: ['./list.component.scss']
 })
 export class ListComponent implements OnInit {
-  headElements = ["ID", "Nombre", "Descripción"];
+  headElements = ['ID', 'Nombre', 'Descripción'];
   loading = true;
   products = [];
-  page = 0;
-  size = 10;
-  totalPages = [];
+  page = 0; // value comes from paginator
+  size = 10; // value comes from paginator
+  private totalPages: Subject<number> = new Subject<number>();
 
   constructor(private productService: ProductService) {}
 
@@ -25,10 +26,7 @@ export class ListComponent implements OnInit {
       data => {
         this.products = data.items;
         this.loading = false;
-        const number = data.total / this.size;
-        for (let i = 0; i < number; i++) {
-          this.totalPages.push(i);
-        }
+        this.totalPages.next(data.total / this.size);
       },
       err => {
         console.log(err);

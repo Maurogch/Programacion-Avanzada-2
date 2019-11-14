@@ -4,13 +4,20 @@
       <a class="page-link" tabindex="-1" mdbWavesEffect>Previous</a>
       <!-- tabindex="-1" to diable prev-->
     </li>
-    <li class="page-item" ng><a class="page-link" mdbWavesEffect>1</a></li>
-    <li class="page-item active">
+    <li
+      class="page-item"
+      [ngClass]="{ active: activePage === pageNumber }"
+      ng
+      *ngFor="let pageNumber of totalPagesArray"
+    >
+      <a class="page-link" mdbWavesEffect>{{ pageNumber }}</a>
+    </li>
+    <!--<li class="page-item active">
       <a class="page-link" mdbWavesEffect
         >2 <span class="sr-only">(current)</span></a
       >
     </li>
-    <li class="page-item"><a class="page-link" mdbWavesEffect>3</a></li>
+    <li class="page-item"><a class="page-link" mdbWavesEffect>3</a></li>-->
     <li class="page-item">
       <a class="page-link" mdbWavesEffect>Next</a>
     </li>
