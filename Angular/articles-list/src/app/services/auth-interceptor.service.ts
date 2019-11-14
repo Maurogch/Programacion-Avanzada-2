@@ -37,7 +37,7 @@ export class AuthInterceptorService implements HttpInterceptor {
       catchError((err: HttpErrorResponse) => {
         if (err.status === 401) {
           // Remove token from storage if there was one (another app token, or expired one)
-          localStorage.logout();
+          this.loginService.logout();
 
           this.router.navigateByUrl('/login');
         }
