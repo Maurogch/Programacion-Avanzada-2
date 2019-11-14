@@ -41,18 +41,25 @@ export class PaginatorComponent implements OnInit, OnDestroy {
 
   setNumberOfPages(totPages: number) {
     this.totalPagesArray = []; // reset array
-    // If at end of items, make pages fixed at end
-    if (this.activePage + this.numberOfItems > totPages) {
+
+    if (this.activePage === 1) {
+      // If at beginning of pagination, and/or pagination less than 10
+      for (let i = 1; i <= totPages && i <= 10; i++) {
+        this.totalPagesArray.push(i);
+      }
+    } else if (this.activePage + this.numberOfItems > totPages) {
+      // If at end of items, make pages fixed at end
       for (let i = totPages - 9; i <= totPages; i++) {
+        // If less than 10 pages limit lenght
+        if (i <= 0) {
+          i = 1;
+        }
         this.totalPagesArray.push(i);
       }
     } else {
       // Else calculate number of dynamic pages normally
+      // (activePage - 1) is to always show number of previous page
       for (let i = this.activePage - 1; i < 9 + this.activePage; i++) {
-        // If at beginning don't show a page 0
-        if (i <= 0) {
-          i = 1;
-        }
         this.totalPagesArray.push(i);
       }
     }
