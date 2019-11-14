@@ -1,0 +1,81 @@
+<nav class="navbar navbar-expand-xl navbar-dark bg-dark">
+  <a class="navbar-brand" href="#">Login App</a>
+  <ul class="navbar-nav ml-auto">
+    <li class="nav-item">
+      <a class="nav-link" [routerLink]="['/sign-up']" routerLinkActive="active">Sign-up</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" [routerLink]="['/login']" routerLinkActive="active">Login</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link">Logout</a>
+    </li>
+  </ul>
+</nav>
+
+<div class="container mt-3">
+  <form [formGroup]="addUserForm" (ngSubmit)="onSubmit()" novalidate>
+    <div class="form-group">
+      <label>Email</label>
+      <input
+        class="form-control"
+        placeholder="Enter email address"
+        formControlName="email"
+        [ngClass]="{ 'is-invalid': isInvalid('email'), 'is-valid': isValid('email') }"
+      />
+      <div *ngIf="isInvalid('email')">
+        <small *ngIf="isRequired('email')" class="form-text text-danger">
+          * Email is required
+        </small>
+        <small *ngIf="isInvalidEmail('email')" class="form-text text-danger">
+          * Email must have the following format 'mail@domain.com'
+        </small>
+        <small *ngIf="isEmailTaken('email')" class="form-text text-danger">
+          * Email already taken
+        </small>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Password</label>
+      <input
+        type="password"
+        class="form-control"
+        placeholder="Enter password"
+        formControlName="password"
+        [ngClass]="{ 'is-invalid': isInvalid('password'), 'is-valid': isValid('password') }"
+      />
+      <div *ngIf="isInvalid('password')">
+        <small *ngIf="isRequired('password')" class="form-text text-danger">
+          * Password is required
+        </small>
+        <small *ngIf="isInvalidPattern('password')" class="form-text text-danger">
+          * Input must not contain invalid chars
+        </small>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Repeat Password</label>
+      <input
+        type="password"
+        class="form-control"
+        placeholder="Repear password"
+        formControlName="repeatPassword"
+        [ngClass]="{ 'is-invalid': isInvalid('repeatPassword'), 'is-valid': isValid('repeatPassword') }"
+      />
+      <div *ngIf="isInvalid('repeatPassword')">
+        <small *ngIf="isRequired('repeatPassword')" class="form-text text-danger">
+          * Field is required
+        </small>
+        <small *ngIf="isInvalidPattern('repeatPassword')" class="form-text text-danger">
+          * Input must not contain invalid chars
+        </small>
+      </div>
+      <div *ngIf="passwordsDoNotMatch()">
+        <small class="form-text text-danger">
+          * Passwords don't match
+        </small>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary" [disabled]="!addUserForm.valid">Submit</button>
+  </form>
+</div>
