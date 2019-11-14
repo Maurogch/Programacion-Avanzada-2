@@ -17,8 +17,8 @@ export class PaginatorComponent implements OnInit, OnDestroy {
   private totalPagesSubscription: any;
   @Input() totalPagesObservable: Observable<number>;
   @Output()
-  selectedPage = new EventEmitter<number>();
-  activePage = 3;
+  selectedPageEvent = new EventEmitter<number>();
+  activePage = 1;
   totalPages = 0;
   totalPagesArray = [];
   numberOfItems = 10; // number of items to show on list
@@ -34,11 +34,13 @@ export class PaginatorComponent implements OnInit, OnDestroy {
     );
   }
 
-  selectPage(page: number) {
-    this.selectedPage.emit(page);
+  selectPage(pageNumber: number) {
+    this.activePage = pageNumber;
+    this.selectedPageEvent.emit(pageNumber);
   }
 
   setNumberOfPages(totPages: number) {
+    this.totalPagesArray = []; // reset array
     // If at end of items, make pages fixed at end
     if (this.activePage + this.numberOfItems > totPages) {
       for (let i = totPages - 9; i <= totPages; i++) {
@@ -47,11 +49,10 @@ export class PaginatorComponent implements OnInit, OnDestroy {
     } else {
       // Else calculate number of dynamic pages normally
       for (let i = this.activePage - 1; i < 9 + this.activePage; i++) {
+        // If at beginning don't show a page 0
         if (i <= 0) {
-          // If at beginning don't show a page 0
           i = 1;
         }
-
         this.totalPagesArray.push(i);
       }
     }

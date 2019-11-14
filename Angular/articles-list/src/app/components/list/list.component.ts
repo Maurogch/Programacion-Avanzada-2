@@ -33,4 +33,9 @@ export class ListComponent implements OnInit {
       }
     );
   }
+
+  pageChange(pageNumber: number) {
+    this.page = pageNumber;
+    this.loadTable(this.page, this.size);
+  }
 }

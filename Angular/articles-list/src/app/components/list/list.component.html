@@ -28,6 +28,7 @@
     <div class="col-md-12" style="padding-top: 1em">
       <app-paginator
         [totalPagesObservable]="totalPages.asObservable()"
+        (selectedPageEvent)="pageChange($event)"
       ></app-paginator>
     </div>
   </div>

@@ -10,7 +10,9 @@
       ng
       *ngFor="let pageNumber of totalPagesArray"
     >
-      <a class="page-link" mdbWavesEffect>{{ pageNumber }}</a>
+      <a class="page-link" (click)="selectPage(pageNumber)" mdbWavesEffect>{{
+        pageNumber
+      }}</a>
     </li>
     <!--<li class="page-item active">
       <a class="page-link" mdbWavesEffect
