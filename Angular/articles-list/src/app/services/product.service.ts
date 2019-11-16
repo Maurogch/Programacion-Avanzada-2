@@ -22,4 +22,23 @@ export class ProductService {
   getByPageSize(page: number, size: number): Observable<any> {
     return this.http.get(this.apiURL + '?page=' + page + '&size=' + size);
   }
+
+  getByPageSizeOrdered(
+    page: number,
+    size: number,
+    orderBy: string,
+    direction: string
+  ): Observable<any> {
+    return this.http.get(
+      this.apiURL +
+        '?page=' +
+        page +
+        '&size=' +
+        size +
+        '&orderBy=' +
+        orderBy +
+        '&direction=' +
+        direction
+    );
+  }
 }
