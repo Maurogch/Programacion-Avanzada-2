@@ -15,25 +15,22 @@
 	// 	],
 	// 	"description": "Log output to console"
 	// }
-
 	"Array from Object attribute": {
 		"scope": "javascript,typescript",
 		"prefix": "arrayFromObject",
 		"body": [
 			"var ${1:array} = Array.from(${2:array}, (a)=>{return ${3:object}.${4:attribute}}"
-			],
+		],
 		"description": "Funtion to sort an array by class attribute."
 	},
-
 	"Array sort by Class attribute": {
 		"scope": "javascript,typescript",
 		"prefix": "arraySort",
 		"body": [
-			"${1:array}.sort((a,b)=>{return (a.${2:attribute}).localeCompare(b.${2:attribute})});"
-			],
+			"${1:array}.sort((a,b)=>{return (a.${2:attribute}).toString().localeCompare(b.${2:attribute})});"
+		],
 		"description": "Funtion to sort an array by class attribute."
 	},
-
 	"Array Remove Duplicates Function": {
 		"scope": "javascript,typescript",
 		"prefix": "arrayRemoveDuplicates",
@@ -41,10 +38,9 @@
 			"function removeDuplicates (arr){",
 			"\treturn arr.filter((v,i) => arr.indexOf(v) === i);",
 			"}",
-			],
+		],
 		"description": "Funtion to remove an duplicates from an array. Returns a new array."
 	},
-
 	"Array Remove Function": {
 		"scope": "javascript,typescript",
 		"prefix": "arrayRemove",
@@ -54,12 +50,11 @@
 			"\t\treturn ele != value;",
 			"\t});",
 			"}",
-			],
+		],
 		"description": "Funtion to remove an element from an array. Returns a new array."
 	},
-
 	"Custom Class": {
-		"scope": "javascript,typescript",
+		"scope": "javascript",
 		"prefix": "newClass",
 		"body": [
 			"export default class ${1:ClassName} {",
@@ -79,10 +74,9 @@
 			"\t\treturn this._${2:attribute};",
 			"\t}",
 			"}",
-			],
+		],
 		"description": "Create a custom class."
 	},
-
 	"For Custom Class": {
 		"scope": "javascript,typescript",
 		"prefix": "forClass",
@@ -90,13 +84,15 @@
 			"for (var key in ${0:class}) {",
 			"\tconsole.log(key + ': ' + ${0:class}[key]);",
 			"}",
-			],
+		],
 		"description": "Iterate elements of a custom class."
 	},
-
 	"Convert Date": {
 		"scope": "javascript,typescript",
-		"prefix": ["dateConvert","datePharse"],
+		"prefix": [
+			"dateConvert",
+			"datePharse"
+		],
 		"body": [
 			"function pharseDate(input) {",
 			"\tlet options = {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric'};",
@@ -104,20 +100,18 @@
 			"\tdate.setHours(date.getHours() - (date.getTimezoneOffset()/60));",
 			"\treturn date.toLocaleDateString('es-US', options);",
 			"}",
-			],
+		],
 		"description": "Convert date from a database to readable."
 	},
-
 	"URLSearchParams": {
-		"scope": "javascript,typescript",
+		"scope": "javascript",
 		"prefix": "getUrlParams",
 		"body": [
 			"var urlParams = new URLSearchParams(window.location.search);",
 			"var ${0:param} = urlParams.get('${0:param}');"
-			],
+		],
 		"description": "Get url params into a variable."
 	},
-
 	"Basic Promise": {
 		"scope": "javascript,typescript",
 		"prefix": "promise",
@@ -145,10 +139,9 @@
 			"\t\trequest.send();",
 			"\t});",
 			"}"
-			],
+		],
 		"description": "A basic promise."
 	},
-
 	"Resolve Promise": {
 		"scope": "javascript,typescript",
 		"prefix": "promiseRes",
@@ -158,10 +151,9 @@
 			"}).catch((err) => {",
 			"\tconsole.log(err);",
 			"});",
-			],
+		],
 		"description": "A promise resolution."
 	},
-
 	"Secuencial Promise": {
 		"scope": "javascript,typescript",
 		"prefix": "promiseSec",
@@ -203,10 +195,9 @@
 			"\t\trequest.send();",
 			"\t});",
 			"}"
-			],
+		],
 		"description": "A secuencial promise."
 	},
-
 	"Fori": {
 		"scope": "javascript,typescript",
 		"prefix": "fori",
@@ -214,7 +205,44 @@
 			"for (let i = 0; i < ${1:var}; i++) {",
 			"\t$0",
 			"}"
-			],
+		],
 		"description": "Simple For i."
-	}
+	},
+	"CustomValidation": {
+		"scope": "typescript",
+		"prefix": "ng-custom-validation",
+		"body": [
+			"${1:FuntionName}(): ValidatorFn {",
+			"\treturn (control: AbstractControl): { [key: string]: any } | null => {",
+			"\t\tif(${2:condition}) {",
+			"\t\t\treturn { ${3:errorName}: true };",
+			"\t\t} else {",
+			"\t\t\treturn null;",
+			"\t\t}",
+			"\t};",
+			"}",
+		],
+		"description": "Angular ReactiveForms custom validation."
+	},
+	"CustomAsyncValidation": {
+		"scope": "typescript",
+		"prefix": "ng-custom-async-validation",
+		"body": [
+			"${1:FuntionName}(control: AbstractControl): Observable<ValidationErrors | null> {",
+			"\treturn this.${2:serviceName}.${3:serviceMethod}(control.value).pipe(",
+			"\t\tmap(() => null),",
+			"\t\tcatchError(error => {",
+			"\t\t\tif (error.status === ${4:409}) {",
+			"\t\t\t\treturn of({",
+			"\t\t\t\t\t${5:asyncInvalid}: true",
+			"\t\t\t\t});",
+			"\t\t\t}",
+			"\t\t\tconsole.log(error);",
+			"\t\t\treturn of(null);",
+			"\t\t})",
+			"\t);",
+			"}",
+		],
+		"description": "Angular ReactiveForms custom async validation."
+	},
 }
