@@ -1,4 +1,4 @@
-import { AuthService } from './../../services/auth.service';
+/*import { AuthService } from './../../services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import {
   FormGroup,
@@ -13,7 +13,7 @@ import { Observable, of } from 'rxjs';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-register',
+  selector: 'app-register-2',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
 })
@@ -22,7 +22,7 @@ export class RegisterComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private authService: AuthService,
+    // private authService: AuthService,
     private router: Router
   ) {
     this.registerForm = this.formBuilder.group({
@@ -40,7 +40,7 @@ export class RegisterComponent implements OnInit {
   register() {
     const request = Object.assign({}, this.registerForm.value);
     console.log(request);
-    this.authService.register(request).subscribe(result => {
+    his.authService.register(request).subscribe(result => {
       console.log('registration result: ' + result);
       this.router.navigateByUrl('/login');
     });
@@ -79,3 +79,4 @@ export class RegisterComponent implements OnInit {
     return this.registerForm.get('password');
   }
 }
+*/
