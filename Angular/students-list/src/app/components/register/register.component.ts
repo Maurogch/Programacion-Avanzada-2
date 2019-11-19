@@ -1,4 +1,4 @@
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
@@ -110,23 +110,19 @@ export class RegisterComponent implements OnInit {
     const email: string = this.registerForm.get('email').value;
 
     return this.loginService.validateEmail(email).pipe(
-      map(response => {
-        console.log('email validation response: ' + response);
-        if (response === null) {
-          return null;
-        } else {
-          return;
-        }
-      }),
+      map(() => null),
       catchError(error => {
+        if (error.status === 409) {
+          return of({ // Return observable
+            asyncInvalid: true // Name that is called for custom validator: formcontrolname.errors.asyncInvalid
+          });
+        }
         console.log(error);
-        return {
-          asyncInvalid: true // Name that is called for custom validator: formcontrolname.errors.asyncInvalid
-        };
+        return of(null);
       })
     );
 
-    /*return new Promise((resolve, reject) => {
+    /*return new Promise((resolve, reject) => {  // Async validation with Promise
       this.loginService
         .validateEmail(email)
         .then(result => {
