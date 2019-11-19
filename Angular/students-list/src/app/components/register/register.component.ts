@@ -107,7 +107,8 @@ export class RegisterComponent implements OnInit {
   validateUserEmail(
     control: AbstractControl
   ): Observable<ValidationErrors | null> {
-    const email: string = this.registerForm.get('email').value;
+    // const email: string = this.registerForm.get('email').value;
+    const email = control.value; // better way to get value
 
     return this.loginService.validateEmail(email).pipe(
       map(() => null),
