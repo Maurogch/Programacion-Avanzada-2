@@ -3,13 +3,14 @@ import { HttpInterceptor, HttpHandler, HttpEvent, HttpRequest, HttpErrorResponse
 import { Observable, throwError, } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { LoginService } from './login.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthInterceptorService implements HttpInterceptor {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private loginService: LoginService) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const token = localStorage.getItem('token');
@@ -28,6 +29,9 @@ export class AuthInterceptorService implements HttpInterceptor {
       catchError((err: HttpErrorResponse) => {
 
         if (err.status === 401) {
+          // Remove token from storage if there was one (another app token, or expired one)
+          this.loginService.logout();
+
           this.router.navigateByUrl('/login');
         }
 
