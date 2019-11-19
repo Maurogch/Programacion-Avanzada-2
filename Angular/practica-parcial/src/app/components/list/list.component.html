@@ -1,0 +1,28 @@
+<div class="container" id="card">
+  <div class="row justify-content-md-center">
+    <div class="col-12">
+      <div *ngIf="loading" style="text-align: center;"><h2>Loading...</h2></div>
+      <table class="table">
+        <thead>
+          <th *ngFor="let item of headElements">{{ item }}</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let student of students">
+            <td>{{ student.studentId }}</td>
+            <td>{{ student.firstName }}</td>
+            <td>{{ student.lastName }}</td>
+            <td>{{ student.email }}</td>
+            <td>{{ student.address }}</td>
+            <td>{{ student.dni }}</td>
+            <td>{{ student.careerId }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="row justify-content-md-center">
+    <div class="col-md-4 text-center mb-3">
+      <button (click)="logout()" class="btn btn-primary">Logout</button>
+    </div>
+  </div>
+</div>

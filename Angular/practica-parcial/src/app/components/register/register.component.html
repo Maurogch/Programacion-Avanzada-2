@@ -1,0 +1,66 @@
+<div class="container" style="height:100vh">
+  <div class="h-100 row justify-content-md-center">
+    <div class="col-12">
+      <div class="wrapper">
+        <div id="formContent">
+          <!-- Tabs Titles -->
+
+          <!-- Icon -->
+          <div class="fadeIn first">
+            <h1>Register</h1>
+          </div>
+
+          <!-- Login Form -->
+          <form [formGroup]="registerForm" (ngSubmit)="register()">
+            <input
+              formControlName="email"
+              type="text"
+              id="login"
+              class="fadeIn second"
+              name="login"
+              placeholder="Email"
+            />
+            <input
+              formControlName="password"
+              type="password"
+              id="password"
+              class="fadeIn third"
+              name="login"
+              placeholder="Password"
+            />
+            <input
+              [disabled]="!registerForm.valid"
+              type="submit"
+              class="fadeIn fourth"
+              value="Register"
+            />
+          </form>
+
+          <div
+            *ngIf="
+              registerForm.invalid &&
+              (registerForm.dirty || registerForm.touched)
+            "
+            class="alert alert-danger"
+          >
+            <div *ngIf="email.errors?.required">
+              Email required
+            </div>
+            <div *ngIf="email.errors?.email">
+              Email not valid
+            </div>
+            <div *ngIf="email.errors?.asyncInvalid">
+              Email already used
+            </div>
+            <div *ngIf="password.errors?.required">
+              Password required
+            </div>
+            <div *ngIf="password.errors?.passwordMustHaveNumbers">
+              Password must have numbers
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
