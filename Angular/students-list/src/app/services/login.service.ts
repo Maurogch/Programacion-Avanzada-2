@@ -45,10 +45,8 @@ export class LoginService {
     );
   }
 
-  validateEmail(email: string): Promise<any> {
-    return this.http
-      .get(this.apiURL + this.identitiesPath + '?email=' + email)
-      .toPromise();
+  validateEmail(email: string): Observable<any> {
+    return this.http.get(this.apiURL + this.identitiesPath + '?email=' + email);
   }
 
   logout(): void {

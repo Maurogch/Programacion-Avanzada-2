@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
@@ -10,6 +11,7 @@ import {
 import { LoginService } from 'src/app/services/login.service';
 import { MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
+import { map, catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'app-register',
@@ -102,10 +104,29 @@ export class RegisterComponent implements OnInit {
     };
   }
 
-  validateUserEmail(): Promise<ValidationErrors | null> {
+  validateUserEmail(
+    control: AbstractControl
+  ): Observable<ValidationErrors | null> {
     const email: string = this.registerForm.get('email').value;
 
-    return new Promise((resolve, reject) => {
+    return this.loginService.validateEmail(email).pipe(
+      map(response => {
+        console.log('email validation response: ' + response);
+        if (response === null) {
+          return null;
+        } else {
+          return;
+        }
+      }),
+      catchError(error => {
+        console.log(error);
+        return {
+          asyncInvalid: true // Name that is called for custom validator: formcontrolname.errors.asyncInvalid
+        };
+      })
+    );
+
+    /*return new Promise((resolve, reject) => {
       this.loginService
         .validateEmail(email)
         .then(result => {
@@ -120,7 +141,7 @@ export class RegisterComponent implements OnInit {
           console.log(err);
           reject('Error on getting email');
         });
-    });
+    });*/
   }
 
   get email() {
