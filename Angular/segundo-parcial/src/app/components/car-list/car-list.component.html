@@ -1,41 +1,47 @@
 <main class="py-5">
-    <section id="listado" class="mb-5">
-         <div class="container">
-              <h2 class="mb-4">Car List</h2>
-              <table class="table table-striped">
-                <thead class="thead-dark">
-                  <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Brand <i class="fa fa-chevron-up"></i></th>
-                    <th scope="col">Model <i class="fa fa-chevron-up"></i></th>
-                    <th scope="col">Year</th>
-                    <th scope="col">Domain</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th scope="row">1</th>
-                    <td>Ford</td>
-                    <td>Fiesta</td>
-                    <td>2017</td>
-                    <td>AAA111</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">2</th>
-                    <td>Peugeot</td>
-                    <td>208</td>
-                    <td>2019</td>
-                    <td>BBB222</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">3</th>
-                    <td>Volkswagen</td>
-                    <td>Trend</td>
-                    <td>2016</td>
-                    <td>CCC333</td>
-                  </tr>
-                </tbody>
-              </table>
-         </div>
-    </section>
+  <section id="listado" class="mb-5">
+    <div class="container">
+      <div>
+        <button type="button" [routerLink]="['/add']" class="btn btn-primary">
+          Add car
+        </button>
+        <button
+          type="button"
+          [routerLink]="['/logout']"
+          class="btn btn-secondary"
+        >
+          Logout
+        </button>
+      </div>
+      <h2 class="mb-4">Car List</h2>
+      <div *ngIf="loading" style="text-align: center;"><h3>Loading...</h3></div>
+      <table class="table table-striped">
+        <thead class="thead-dark">
+          <tr>
+            <th *ngFor="let head of headElements" (click)="sort(head.name)">
+              <i *ngIf="sortedBy !== head.name" class="fa fa-fw fa-sort"></i>
+              <i
+                *ngIf="sortedBy === head.name && direction == 'ASC'"
+                class="fa fa-fw fa-sort-up"
+              ></i>
+              <i
+                *ngIf="sortedBy === head.name && direction == 'DESC'"
+                class="fa fa-fw fa-sort-down"
+              ></i>
+              {{ head.headName }}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let car of cars">
+            <td>{{ car.carId }}</td>
+            <td>{{ car.brand }}</td>
+            <td>{{ car.model }}</td>
+            <td>{{ car.year }}</td>
+            <td>{{ car.domain }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
 </main>

@@ -10,13 +10,15 @@ import { AppRoutingModule } from './app-routing.module';
 import { AuthInterceptorService } from './services/auth-interceptor.service';
 import { CarAddComponent } from './components/car-add/car-add.component';
 import { CarListComponent } from './components/car-list/car-list.component';
+import { LogoutComponent } from './components/logout/logout.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     CarAddComponent,
-    CarListComponent
+    CarListComponent,
+    LogoutComponent
   ],
   imports: [
     BrowserModule,

@@ -1,34 +1,90 @@
-<main class="py-5">
-  <section class="mb-5">         
-    <div class="container">
+<form [formGroup]="carForm" id="form" (ngSubmit)="add()">
+  <main class="py-5">
+    <section class="mb-5">
+      <div class="container">
         <h3 class="mb-3">Add Car</h3>
         <div class="bg-light p-4">
-            <div class="row">
-                <div class="col-lg-4">
-                    <label for="">Brand</label>
-                    <input type="text" class="form-control form-control-ml">
-                </div>                         
-                
-                <div class="col-lg-4">
-                    <label for="">Model</label>
-                    <input type="text" class="form-control form-control-ml">
-                </div>
-
-                <div class="col-lg-2">
-                    <label for="">Year</label>
-                    <input type="text" class="form-control form-control-ml">
-                </div>
+          <div class="row">
+            <div class="col-lg-4">
+              <label for="brand">Brand</label>
+              <input
+                formControlName="brand"
+                id="brand"
+                type="text"
+                class="form-control form-control-ml"
+              />
             </div>
 
-            <div class="row">
-                <div class="col-lg-2">
-                    <label for="">Domain</label>
-                    <input type="email" class="form-control form-control-ml">
-                </div>            
-            </div>             
-            <hr class="mb-4">
-            <button type="submit" class="btn btn-primary">Add</button>                    
+            <div class="col-lg-4">
+              <label for="model">Model</label>
+              <input
+                formControlName="model"
+                id="model"
+                type="text"
+                class="form-control form-control-ml"
+              />
+            </div>
+
+            <div class="col-lg-2">
+              <label for="year">Year</label>
+              <input
+                formControlName="year"
+                id="year"
+                type="number"
+                class="form-control form-control-ml"
+              />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-2">
+              <label for="domain">Domain</label>
+              <input
+                formControlName="domain"
+                id="domain"
+                type="email"
+                class="form-control form-control-ml"
+              />
+            </div>
+          </div>
+          <div
+            *ngIf="carForm.invalid && (carForm.dirty || carForm.touched)"
+            class="alert alert-danger"
+          >
+            <div *ngIf="brand?.errors?.required">
+              Breand required
+            </div>
+            <div *ngIf="model?.errors?.required">
+              Model required
+            </div>
+            <div *ngIf="year?.errors?.required">
+              Year required
+            </div>
+            <div *ngIf="domain?.errors?.required">
+              Domain required
+            </div>
+            <div *ngIf="domain?.errors?.asyncInvalid">
+              Domain already exists
+            </div>
+          </div>
+          <hr class="mb-4" />
+          <button
+            [disabled]="!carForm.valid"
+            type="submit"
+            class="btn btn-primary"
+          >
+            Add
+          </button>
+          <button
+            type="button"
+            class="btn btn-secondary"
+            [routerLink]="['/list']"
+          >
+            Return to List
+          </button>
+          <div class="alert alert-danger" *ngIf="snack">{{ message }}</div>
         </div>
-    </div>         
-  </section>
-</main>
+      </div>
+    </section>
+  </main>
+</form>
